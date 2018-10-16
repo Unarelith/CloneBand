@@ -14,10 +14,11 @@
 #include "Note.hpp"
 
 Note::Note(const ChartNote &note) : m_note(&note) {
-	m_rect.setPosition(25, 25);
-	m_rect.setSize({50, 50});
-	// m_rect.setOutlineThickness(10);
+	m_sprite.setScale(4, 4);
+	m_sprite.setPosition(-32, -64);
+	m_sprite.setCurrentFrame(note.type);
 
+	m_rect.setSize({64, 64});
 	switch (note.type) {
 		case 0: m_rect.setFillColor(sf::Color::Green);   break;
 		case 1: m_rect.setFillColor(sf::Color::Red);     break;
@@ -31,6 +32,9 @@ Note::Note(const ChartNote &note) : m_note(&note) {
 void Note::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
-	target.draw(m_rect, states);
+	if (m_skinEnabled)
+		target.draw(m_sprite, states);
+	else
+		target.draw(m_rect, states);
 }
 

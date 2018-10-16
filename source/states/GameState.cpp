@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "Config.hpp"
 #include "Debug.hpp"
 #include "GameClock.hpp"
 #include "GameState.hpp"
@@ -22,7 +23,7 @@ GameState::GameState() {
 	m_lastReportedPlayheadPosition = 0;
 	m_music.play();
 
-	m_highway.setPosition(550, 0);
+	m_highway.setPosition(Config::screenWidth / 2 - 5 * 128 / 2, 0);
 	// m_highway.setScale(0.1, 0.1);
 }
 

@@ -48,7 +48,7 @@ bool Chart::parseSection(std::ifstream &chart) {
 
 	skipWhitespaces(chart);
 
-	if (sectionName != "ExpertSingle") {
+	if (sectionName != "MediumSingle") {
 		std::string sectionLine;
 		while (std::getline(chart, sectionLine, '\n') && sectionLine[0] != '}')
 			skipWhitespaces(chart);

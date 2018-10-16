@@ -1,38 +1,35 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Note.hpp
+ *       Filename:  Fret.hpp
  *
  *    Description:
  *
- *        Created:  29/07/2018 13:06:25
+ *        Created:  16/10/2018 22:42:39
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
-#ifndef NOTE_HPP_
-#define NOTE_HPP_
+#ifndef FRET_HPP_
+#define FRET_HPP_
 
-#include <SFML/Graphics.hpp>
-
-#include "Chart.hpp"
 #include "Sprite.hpp"
 
-class Note : public sf::Drawable, public sf::Transformable {
+class Fret : public sf::Drawable, public sf::Transformable {
 	public:
-		Note(const ChartNote &note);
+		Fret(u16 id);
 
-		const ChartNote &note() const { return *m_note; }
+		void setPressedState(bool isPressed);
 
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-		bool m_skinEnabled = true;
-		Sprite m_sprite{"texture-frets", 32, 32};
-		sf::RectangleShape m_rect;
+		u16 m_id;
 
-		const ChartNote *m_note;
+		bool m_skinEnabled = true;
+		Sprite m_sprite;
+		sf::RectangleShape m_rect;
 };
 
-#endif // NOTE_HPP_
+#endif // FRET_HPP_

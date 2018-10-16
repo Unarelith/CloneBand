@@ -17,6 +17,7 @@
 #include <deque>
 
 #include "Note.hpp"
+#include "Fret.hpp"
 
 class Highway : public sf::Drawable, public sf::Transformable {
 	public:
@@ -27,6 +28,9 @@ class Highway : public sf::Drawable, public sf::Transformable {
 		void update(u32 songTime);
 
 	private:
+		void handleKeyboard(const sf::Event &event);
+		void handleGamepad(const sf::Event &event);
+
 		void keyPressed(u8 key);
 		void keyReleased(u8 key);
 
@@ -39,7 +43,7 @@ class Highway : public sf::Drawable, public sf::Transformable {
 		sf::RectangleShape m_strumBar;
 		sf::RectangleShape m_border;
 
-		std::array<sf::RectangleShape, 5> m_keys;
+		std::array<Fret, 5> m_frets{0, 1, 2, 3, 4};
 };
 
 #endif // HIGHWAY_HPP_

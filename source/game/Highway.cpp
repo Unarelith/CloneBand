@@ -18,31 +18,31 @@
 #include "Highway.hpp"
 
 Highway::Highway(Chart &chart) : m_chart(chart) {
-	m_border.setSize({508, 892});
+	m_border.setSize({128 * 5 + 8, 892});
 	m_border.setPosition(-4, 4);
 	m_border.setOutlineThickness(4);
 	m_border.setOutlineColor(sf::Color::White);
 	m_border.setFillColor(sf::Color::Black);
 
-	m_strumBar.setSize({492, 100});
+	m_strumBar.setSize({128 * 5 - 8, 128 - 8});
 	m_strumBar.setPosition(4, 700);
 	m_strumBar.setOutlineThickness(4);
 	m_strumBar.setOutlineColor(sf::Color::White);
 	m_strumBar.setFillColor(sf::Color::Black);
 
 	for (u8 i = 0 ; i < 5 ; ++i) {
-		m_keys[i].setPosition(i * 100 + 25, 725);
-		m_keys[i].setSize({50, 50});
-		m_keys[i].setOutlineThickness(4);
-		m_keys[i].setOutlineColor(sf::Color::White);
-		m_keys[i].setFillColor(sf::Color::Black);
+		m_frets[i].setPosition(i * 128 + 32, 725);
 	}
 }
 
 void Highway::onEvent(const sf::Event &event) {
-	static int key = -1;
+	handleKeyboard(event);
+	handleGamepad(event);
+}
+
+void Highway::handleKeyboard(const sf::Event &event) {
 	if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
-		key = -1;
+		int key = -1;
 
 		if (event.key.code == sf::Keyboard::H) key = 0;
 		if (event.key.code == sf::Keyboard::J) key = 1;
@@ -52,39 +52,43 @@ void Highway::onEvent(const sf::Event &event) {
 
 		if (key != -1) {
 			if (event.type == sf::Event::KeyPressed) {
-				m_keys[key].setFillColor(sf::Color::White);
+				m_frets[key].setPressedState(true);
 				keyPressed(key);
 			} else {
-				m_keys[key].setFillColor(sf::Color::Black);
+				m_frets[key].setPressedState(false);
 				keyReleased(key);
 			}
 		}
 	}
-	// else if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
-	// 	key = -1;
-    //
-	// 	if (event.joystickButton.button == 0) key = 0;
-	// 	if (event.joystickButton.button == 1) key = 1;
-	// 	if (event.joystickButton.button == 2) key = 3;
-	// 	if (event.joystickButton.button == 3) key = 2;
-	// 	if (event.joystickButton.button == 4) key = 4;
-    //
-	// 	if (key != -1) {
-	// 		if (event.type == sf::Event::JoystickButtonPressed) {
-	// 			m_keys[key].setFillColor(sf::Color::White);
-	// 		} else {
-	// 			m_keys[key].setFillColor(sf::Color::Black);
-	// 			keyReleased(key);
-	// 		}
-	// 	}
-	// }
-	// else if (event.type == sf::Event::JoystickMoved && event.joystickMove.axis == 7 && event.joystickMove.position) {
-	// 	keyPressed(key);
-	// }
+}
+
+void Highway::handleGamepad(const sf::Event &event) {
+	static int key = -1;
+
+	if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+		key = -1;
+
+		if (event.joystickButton.button == 0) key = 0;
+		if (event.joystickButton.button == 1) key = 1;
+		if (event.joystickButton.button == 2) key = 3;
+		if (event.joystickButton.button == 3) key = 2;
+		if (event.joystickButton.button == 4) key = 4;
+
+		if (key != -1) {
+			if (event.type == sf::Event::JoystickButtonPressed) {
+				m_frets[key].setPressedState(true);
+			} else {
+				m_frets[key].setPressedState(false);
+				keyReleased(key);
+			}
+		}
+	}
+	else if (event.type == sf::Event::JoystickMoved && event.joystickMove.axis == 7 && event.joystickMove.position) {
+		keyPressed(key);
+	}
 }
 
 void Highway::keyPressed(u8 key) {
-	m_keys[key].setFillColor(sf::Color::White);
 	auto it = std::find_if(m_noteQueue.begin(), m_noteQueue.end(), [key](Note &note) {
 		// DEBUG(note.note().position, note.note().type, key);
 		return note.note().type == key;
@@ -93,8 +97,8 @@ void Highway::keyPressed(u8 key) {
 	if (it != m_noteQueue.end()) {
 		u64 time = GameClock::getTicks();
 		// DEBUG(time, it->note().time, it->note().position);
-		if (time < it->note().time + 200
-		 && time > it->note().time - 200) {
+		if (time < it->note().time + 150
+		 && time > it->note().time - 150) {
 			// DEBUG("lol", key, it->note().type);
 			m_noteQueue.erase(it);
 		}
@@ -117,17 +121,17 @@ void Highway::update(u32 songTime) {
 
 	for (auto &it : m_noteQueue) {
 		float y = m_strumBar.getPosition().y + songTime - it.note().time;
-		it.setPosition(it.note().type * 100, y);
+		it.setPosition(it.note().type * 128 + 32, y);
 	}
 }
 
 void Highway::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
-	target.draw(m_border, states);
-	target.draw(m_strumBar, states);
+	// target.draw(m_border, states);
+	// target.draw(m_strumBar, states);
 
-	for (auto &it : m_keys)
+	for (auto &it : m_frets)
 		target.draw(it, states);
 
 	for (auto &it : m_noteQueue)

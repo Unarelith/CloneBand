@@ -20,7 +20,7 @@ namespace Config {
 	const u16 screenWidth = 1600;
 	const u16 screenHeight = 900;
 
-	const char *windowTitle = "CloneBand";
+	const char * const windowTitle = "CloneBand";
 };
 
 #endif // CONFIG_HPP_
