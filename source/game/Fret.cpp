@@ -24,6 +24,24 @@ Fret::Fret(u16 id) : m_sprite("texture-frets", 32, 32) {
 	m_rect.setOutlineThickness(4);
 	m_rect.setOutlineColor(sf::Color::White);
 	m_rect.setFillColor(sf::Color::Black);
+
+	SpriteAnimation anim{50};
+	anim.setRepeated(false);
+	anim.addFrame(2);
+	anim.addFrame(1);
+	anim.addFrame(0);
+
+	m_fire.setScale(4, 4);
+	m_fire.setPosition(-32, -64);
+	m_fire.addAnimation(anim);
+	m_fire.setAnimated(false);
+}
+
+void Fret::update() {
+	m_fire.updateAnimations();
+
+	if (m_fire.currentAnimation().isFinished())
+		m_fire.setAnimated(false);
 }
 
 void Fret::setPressedState(bool isPressed) {
@@ -36,6 +54,13 @@ void Fret::setPressedState(bool isPressed) {
 	}
 }
 
+void Fret::setFireState(bool hasFire) {
+	if (hasFire) {
+		m_fire.currentAnimation().reset();
+		m_fire.setAnimated(true);
+	}
+}
+
 void Fret::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
@@ -43,5 +68,8 @@ void Fret::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 		target.draw(m_sprite, states);
 	else
 		target.draw(m_rect, states);
+
+	if (m_fire.isAnimated())
+		target.draw(m_fire, states);
 }
 

@@ -100,6 +100,7 @@ void Highway::keyPressed(u8 key) {
 		if (time < it->note().time + 150
 		 && time > it->note().time - 150) {
 			// DEBUG("lol", key, it->note().type);
+			m_frets[key].setFireState(true);
 			m_noteQueue.erase(it);
 		}
 	}
@@ -109,6 +110,9 @@ void Highway::keyReleased(u8 key) {
 }
 
 void Highway::update(u32 songTime) {
+	for (u8 i = 0 ; i < 5 ; ++i)
+		m_frets[i].update();
+
 	const ChartNote *nextNote = m_chart.getNextNote(songTime + 1000);
 	if (nextNote && (m_noteQueue.empty() || m_noteQueue.back().note().id != nextNote->id)) {
 		m_noteQueue.emplace_back(*nextNote);

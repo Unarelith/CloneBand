@@ -23,6 +23,7 @@ void Application::init() {
 	createWindow(Config::screenWidth, Config::screenHeight, Config::windowTitle);
 
 	m_resourceHandler.add<sf::Texture>("texture-frets").loadFromFile("graphics/frets.png");
+	m_resourceHandler.add<sf::Texture>("texture-fire").loadFromFile("graphics/fire.png");
 
 	ApplicationStateStack::getInstance().push<GameState>();
 }
