@@ -21,6 +21,9 @@ Highway::Highway(Chart &chart) : m_chart(chart) {
 	m_background1.setScale(8, 8);
 	m_background2.setScale(8, 8);
 
+	m_background1.setTileColor(0, sf::Color(127, 127, 127));
+	m_background2.setTileColor(0, sf::Color(127, 127, 127));
+
 	m_backgroundWidth = m_background1.width() * m_background1.getScale().x;
 	m_backgroundHeight = m_background1.height() * m_background1.getScale().y;
 
@@ -122,23 +125,25 @@ void Highway::update(u32 songTime) {
 	for (u8 i = 0 ; i < 5 ; ++i)
 		m_frets[i].update();
 
+	// FIXME: Use note speed instead of an arbitrary value
 	const ChartNote *nextNote = m_chart.getNextNote(songTime + 2000);
 	if (nextNote && (m_noteQueue.empty() || m_noteQueue.back().note().id != nextNote->id)) {
 		m_noteQueue.emplace_back(*nextNote);
 	}
 
+	// FIXME: Use note speed instead of an arbitrary value
 	if (!m_noteQueue.empty() && m_noteQueue.front().note().time + 1000 < songTime) {
 		// DEBUG(m_noteQueue.front().note().position);
 		m_noteQueue.pop_front();
 	}
 
 	for (auto &it : m_noteQueue) {
-		float y = m_strumBar.getPosition().y + ((int)songTime - (int)it.note().time) / 2.0f;
+		float y = m_strumBar.getPosition().y + ((int)songTime - (int)it.note().time) * (m_noteSpeed / 12.0f);
 		it.setPosition(it.note().type * 128 + 32, y);
 	}
 
-	m_background1.setPosition(m_background1.getPosition().x, (songTime / 2) % m_backgroundHeight);
-	m_background2.setPosition(m_background2.getPosition().x, ((int)songTime / 2) % m_backgroundHeight - m_backgroundHeight);
+	m_background1.setPosition(m_background1.getPosition().x, int(songTime * (m_noteSpeed / 12.0f)) % m_backgroundHeight);
+	m_background2.setPosition(m_background2.getPosition().x, int(songTime * (m_noteSpeed / 12.0f)) % m_backgroundHeight - m_backgroundHeight);
 }
 
 void Highway::draw(sf::RenderTarget &target, sf::RenderStates states) const {

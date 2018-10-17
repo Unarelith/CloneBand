@@ -49,6 +49,8 @@ class Highway : public sf::Drawable, public sf::Transformable {
 		Image m_background2{"texture-highway"};
 		u16 m_backgroundWidth = 0;
 		u16 m_backgroundHeight = 0;
+
+		u16 m_noteSpeed = 8;
 };
 
 #endif // HIGHWAY_HPP_
