@@ -36,13 +36,24 @@ target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 #------------------------------------------------------------------------------
 # - jsoncpp
 #------------------------------------------------------------------------------
-find_package(JsonCpp REQUIRED)
-if(NOT JSONCPP_FOUND)
-	message(FATAL_ERROR "jsoncpp is needed to build the project. Please install it correctly.")
+# find_package(JsonCpp REQUIRED)
+# if(NOT JSONCPP_FOUND)
+# 	message(FATAL_ERROR "jsoncpp is needed to build the project. Please install it correctly.")
+# endif()
+#
+# include_directories(${JSONCPP_INCLUDE_DIRS})
+# link_directories(${JSONCPP_LIBRARY_DIRS})
+
+#------------------------------------------------------------------------------
+# - tinyxml2
+#------------------------------------------------------------------------------
+find_package(TinyXml2 REQUIRED)
+if(NOT TINYXML2_FOUND)
+	message(FATAL_ERROR "tinyxml2 is needed to build the project. Please install it correctly.")
 endif()
 
-include_directories(${JSONCPP_INCLUDE_DIRS})
-link_directories(${JSONCPP_LIBRARY_DIRS})
+include_directories(${TINYXML2_INCLUDE_DIRS})
+link_directories(${TINYXML2_LIBRARY_DIRS})
 
 #------------------------------------------------------------------------------
 # - SFML
@@ -58,7 +69,7 @@ include_directories(${SFML_INCLUDE_DIRS})
 # Link options
 #------------------------------------------------------------------------------
 target_link_libraries(${CMAKE_PROJECT_NAME}
-                      ${JSONCPP_LIBRARIES}
+                      ${TINYXML2_LIBRARIES}
                       sfml-audio
                       sfml-graphics
                       sfml-network

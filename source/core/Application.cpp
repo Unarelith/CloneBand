@@ -14,6 +14,7 @@
 #include "Application.hpp"
 #include "Config.hpp"
 #include "ResourceHandler.hpp"
+#include "TextureLoader.hpp"
 
 #include "GameState.hpp"
 
@@ -22,12 +23,7 @@ void Application::init() {
 
 	createWindow(Config::screenWidth, Config::screenHeight, Config::windowTitle);
 
-	m_resourceHandler.add<sf::Texture>("texture-frets").loadFromFile("graphics/frets.png");
-	m_resourceHandler.add<sf::Texture>("texture-fire").loadFromFile("graphics/fire.png");
-
-	auto &texture = m_resourceHandler.add<sf::Texture>("texture-highway");
-	texture.loadFromFile("graphics/highway.png");
-	texture.setSmooth(true);
+	m_resourceHandler.loadConfigFile<TextureLoader>("resources/config/textures.xml");
 
 	ApplicationStateStack::getInstance().push<GameState>();
 }

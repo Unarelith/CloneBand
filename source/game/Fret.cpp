@@ -13,12 +13,11 @@
  */
 #include "Fret.hpp"
 
-Fret::Fret(u16 id) : m_sprite("texture-frets", 32, 32) {
+Fret::Fret(u16 id) {
 	m_id = id;
 
-	m_sprite.setScale(4, 4);
-	m_sprite.setPosition(-32, -64);
-	m_sprite.setCurrentFrame(5 + id);
+	m_sprite.setPosition(-32, 0);
+	m_sprite.setCurrentFrame(id);
 
 	m_rect.setSize({64, 64});
 	m_rect.setOutlineThickness(4);
@@ -27,37 +26,35 @@ Fret::Fret(u16 id) : m_sprite("texture-frets", 32, 32) {
 
 	SpriteAnimation anim{50};
 	anim.setRepeated(false);
-	anim.addFrame(2);
-	anim.addFrame(1);
-	anim.addFrame(0);
+	for (int i = 2 ; i >= 0 ; --i) anim.addFrame(i);
 
-	m_fire.setScale(4, 4);
-	m_fire.setPosition(-32, -64);
-	m_fire.addAnimation(anim);
-	m_fire.setAnimated(false);
+	m_flames.setScale(4, 4);
+	m_flames.setPosition(-32, -64);
+	m_flames.addAnimation(anim);
+	m_flames.setAnimated(false);
 }
 
 void Fret::update() {
-	m_fire.updateAnimations();
+	m_flames.updateAnimations();
 
-	if (m_fire.currentAnimation().isFinished())
-		m_fire.setAnimated(false);
+	if (m_flames.currentAnimation().isFinished())
+		m_flames.setAnimated(false);
 }
 
 void Fret::setPressedState(bool isPressed) {
 	if (isPressed) {
 		m_rect.setFillColor(sf::Color::White);
-		m_sprite.setCurrentFrame(10 + m_id);
+		m_sprite.setCurrentFrame(5 + m_id);
 	} else {
 		m_rect.setFillColor(sf::Color::Black);
-		m_sprite.setCurrentFrame(5 + m_id);
+		m_sprite.setCurrentFrame(m_id);
 	}
 }
 
 void Fret::setFireState(bool hasFire) {
 	if (hasFire) {
-		m_fire.currentAnimation().reset();
-		m_fire.setAnimated(true);
+		m_flames.currentAnimation().reset();
+		m_flames.setAnimated(true);
 	}
 }
 
@@ -69,7 +66,7 @@ void Fret::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	else
 		target.draw(m_rect, states);
 
-	if (m_fire.isAnimated())
-		target.draw(m_fire, states);
+	if (m_flames.isAnimated())
+		target.draw(m_flames, states);
 }
 

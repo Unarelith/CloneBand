@@ -23,16 +23,11 @@ GameState::GameState() {
 	m_lastReportedPlayheadPosition = 0;
 	m_music.play();
 
-	m_highway.setPosition(Config::screenWidth / 2 - 5 * 128 / 2, 0);
+	m_highway.setPosition(Config::screenWidth / 2 - 5 * 136 / 2, 0);
 	// m_highway.setScale(0.1, 0.1);
 }
 
 void GameState::onEvent(const sf::Event &event) {
-	// if (event.type == sf::Event::JoystickButtonPressed)
-	// 	DEBUG(event.joystickButton.button)
-	// if (event.type == sf::Event::JoystickMoved && event.joystickMove.axis == 7)
-	// 	DEBUG(event.joystickMove.position);
-
 	m_highway.onEvent(event);
 }
 

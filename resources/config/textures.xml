@@ -1,0 +1,13 @@
+<textures>
+	<texture name="bpm_beat"     path="resources/graphics/bpm_beat.png" />
+	<texture name="bpm_halfbeat" path="resources/graphics/bpm_halfbeat.png" />
+	<texture name="bpm_measure"  path="resources/graphics/bpm_measure.png" />
+	<texture name="center_lines" path="resources/graphics/center_lines.png" />
+	<texture name="flames"       path="resources/graphics/flames.png" />
+	<texture name="frets"        path="resources/graphics/frets.png" />
+	<texture name="highway"      path="resources/graphics/highway.png" />
+	<texture name="notes"        path="resources/graphics/notes.png" />
+	<texture name="side_bars"    path="resources/graphics/side_bars.png" />
+	<texture name="tail"         path="resources/graphics/tail.png" />
+</textures>
+

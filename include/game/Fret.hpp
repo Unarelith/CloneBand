@@ -25,16 +25,19 @@ class Fret : public sf::Drawable, public sf::Transformable {
 		void setPressedState(bool isPressed);
 		void setFireState(bool hasFire);
 
+		float width() { return m_sprite.frameWidth(); }
+		float height() { return m_sprite.frameHeight(); }
+
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		u16 m_id;
 
 		bool m_skinEnabled = true;
-		Sprite m_sprite;
+		Sprite m_sprite{"texture-frets", 136, 82};
 		sf::RectangleShape m_rect;
 
-		Sprite m_fire{"texture-fire", 32, 32};
+		Sprite m_flames{"texture-flames", 32, 32};
 };
 
 #endif // FRET_HPP_

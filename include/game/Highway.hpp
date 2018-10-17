@@ -50,6 +50,9 @@ class Highway : public sf::Drawable, public sf::Transformable {
 		u16 m_backgroundWidth = 0;
 		u16 m_backgroundHeight = 0;
 
+		Image m_sideBars{"texture-side_bars"};
+		Image m_centerLines{"texture-center_lines"};
+
 		u16 m_noteSpeed = 8;
 
 		bool m_skinEnabled = true;

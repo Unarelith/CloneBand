@@ -65,7 +65,7 @@ bool ChartParser::parseSection(std::ifstream &chart, std::vector<ChartNote> &not
 			throw EXCEPTION("Syntax error at char '", (int)chart.peek(), "'", chart.tellg());
 		}
 	}
-	else if (sectionName == "MediumSingle") {
+	else if (sectionName == "ExpertSingle") {
 		if (char c = chart.get() ; c != '{')
 			throw EXCEPTION("Syntax error at char '", (int)c, "'", chart.tellg());
 
@@ -160,6 +160,13 @@ bool ChartParser::parseNotes(std::ifstream &chart, std::vector<ChartNote> &notes
 
 	skipWhitespaces(chart);
 	int noteType = chart.get() - '0';
+	if (noteType == 5)
+		notes.back().isHopo = !notes.back().isHopo;
+	if (noteType > 4) {
+		while (chart.get() != '\n');
+		return true;
+	}
+
 	skipWhitespaces(chart);
 
 	std::string length;
@@ -173,10 +180,17 @@ bool ChartParser::parseNotes(std::ifstream &chart, std::vector<ChartNote> &notes
 	}
 	int noteTime = m_time + m_songOffset;
 
-	if (notePosition < 1000)
-		DEBUG("New note:", notePosition, noteTime, eventType, noteType, noteLength, currentBpm);
+	bool isHopo = false;
+	if (!notes.empty()) {
+		float noteDiff = notePosition - notes.back().position;
+		if (noteDiff > 0)
+			isHopo = (m_songResolution / noteDiff >= 4 && noteType != notes.back().type);
+	}
 
-	notes.emplace_back(notes.size(), notePosition, noteTime, noteType, noteLength);
+	if (notePosition < 1000)
+		DEBUG("New note:", notePosition, noteTime, eventType, noteType, noteLength, isHopo, currentBpm);
+
+	notes.emplace_back(notes.size(), notePosition, noteTime, noteType, noteLength, isHopo);
 
 	return true;
 }

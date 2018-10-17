@@ -17,14 +17,15 @@
 #include "ChartParser.hpp"
 
 struct ChartNote {
-	ChartNote(u64 _id, u64 _position, u64 _time, u16 _type, u16 _length)
-		: id(_id), position(_position), time(_time), type(_type), length(_length) {}
+	ChartNote(u64 _id, u64 _position, u64 _time, u16 _type, u16 _length, bool _isHopo)
+		: id(_id), position(_position), time(_time), type(_type), length(_length), isHopo(_isHopo) {}
 
 	u64 id = 0;
 	u64 position = 0;
 	u64 time = 0;
 	u16 type = 0;
 	u16 length = 0;
+	bool isHopo = false;
 };
 
 class Chart {

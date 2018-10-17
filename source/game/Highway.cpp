@@ -18,8 +18,9 @@
 #include "Highway.hpp"
 
 Highway::Highway(Chart &chart) : m_chart(chart) {
-	m_background1.setScale(8, 8);
-	m_background2.setScale(8, 8);
+	float backgroundScale = 6.5;
+	m_background1.setScale(backgroundScale, backgroundScale);
+	m_background2.setScale(backgroundScale, backgroundScale);
 
 	m_background1.setTileColor(0, sf::Color(127, 127, 127));
 	m_background2.setTileColor(0, sf::Color(127, 127, 127));
@@ -27,23 +28,29 @@ Highway::Highway(Chart &chart) : m_chart(chart) {
 	m_backgroundWidth = m_background1.width() * m_background1.getScale().x;
 	m_backgroundHeight = m_background1.height() * m_background1.getScale().y;
 
-	m_background1.setPosition(128 * 5 / 2 - m_backgroundWidth / 2, 0);
-	m_background2.setPosition(128 * 5 / 2 - m_backgroundWidth / 2, -m_backgroundHeight);
+	m_background1.setPosition(m_frets[0].width() * 5 / 2 - m_backgroundWidth / 2, 0);
+	m_background2.setPosition(m_frets[0].width() * 5 / 2 - m_backgroundWidth / 2, -m_backgroundHeight);
 
-	m_border.setSize({128 * 5 + 8, 892});
+	m_sideBars.setScale(0.725, 0.725);
+	m_sideBars.setPosition(m_background1.getPosition().x, 0);
+
+	m_centerLines.setScale(1.16, 1.16);
+	m_centerLines.setPosition(0, 0);
+
+	m_border.setSize({m_frets[0].width() * 5 + 8, 892});
 	m_border.setPosition(-4, 4);
 	m_border.setOutlineThickness(4);
 	m_border.setOutlineColor(sf::Color::White);
 	m_border.setFillColor(sf::Color::Black);
 
-	m_strumBar.setSize({128 * 5 - 8, 128 - 8});
+	m_strumBar.setSize({m_frets[0].width() * 5 - 8, m_frets[0].height() - 8});
 	m_strumBar.setPosition(4, 700);
 	m_strumBar.setOutlineThickness(4);
 	m_strumBar.setOutlineColor(sf::Color::White);
 	m_strumBar.setFillColor(sf::Color::Black);
 
 	for (u8 i = 0 ; i < 5 ; ++i) {
-		m_frets[i].setPosition(i * 128 + 32, 725);
+		m_frets[i].setPosition(i * m_frets[0].width() + 32, 725);
 	}
 }
 
@@ -139,7 +146,7 @@ void Highway::update(u32 songTime) {
 
 	for (auto &it : m_noteQueue) {
 		float y = m_strumBar.getPosition().y + ((int)songTime - (int)it.note().time) * (m_noteSpeed / 12.0f);
-		it.setPosition(it.note().type * 128 + 32, y);
+		it.setPosition(it.note().type * m_frets[0].width() + 32, y);
 	}
 
 	m_background1.setPosition(m_background1.getPosition().x, int(songTime * (m_noteSpeed / 12.0f)) % m_backgroundHeight);
@@ -152,6 +159,8 @@ void Highway::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	if (m_skinEnabled) {
 		target.draw(m_background1, states);
 		target.draw(m_background2, states);
+		target.draw(m_sideBars, states);
+		target.draw(m_centerLines, states);
 	} else {
 		target.draw(m_border, states);
 		target.draw(m_strumBar, states);

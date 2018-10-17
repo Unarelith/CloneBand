@@ -25,14 +25,18 @@ class Note : public sf::Drawable, public sf::Transformable {
 
 		const ChartNote &note() const { return *m_note; }
 
+		u16 width() { return m_sprite.frameWidth(); }
+		u16 height() { return m_sprite.frameHeight(); }
+
 	private:
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		bool m_skinEnabled = true;
-		Sprite m_sprite{"texture-frets", 32, 32};
+		Sprite m_sprite{"texture-notes", 132, 132};
 		sf::RectangleShape m_rect;
 
 		sf::RectangleShape m_bar;
+		Image m_tail{"texture-tail"};
 
 		const ChartNote *m_note;
 };
