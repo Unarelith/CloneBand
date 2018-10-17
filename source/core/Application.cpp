@@ -24,6 +24,7 @@ void Application::init() {
 
 	m_resourceHandler.add<sf::Texture>("texture-frets").loadFromFile("graphics/frets.png");
 	m_resourceHandler.add<sf::Texture>("texture-fire").loadFromFile("graphics/fire.png");
+	m_resourceHandler.add<sf::Texture>("texture-highway").loadFromFile("graphics/highway.png");
 
 	ApplicationStateStack::getInstance().push<GameState>();
 }

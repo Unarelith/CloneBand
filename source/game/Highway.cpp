@@ -18,6 +18,15 @@
 #include "Highway.hpp"
 
 Highway::Highway(Chart &chart) : m_chart(chart) {
+	m_background1.setScale(8, 8);
+	m_background2.setScale(8, 8);
+
+	m_backgroundWidth = m_background1.width() * m_background1.getScale().x;
+	m_backgroundHeight = m_background1.height() * m_background1.getScale().y;
+
+	m_background1.setPosition(128 * 5 / 2 - m_backgroundWidth / 2, 0);
+	m_background2.setPosition(128 * 5 / 2 - m_backgroundWidth / 2, -m_backgroundHeight);
+
 	m_border.setSize({128 * 5 + 8, 892});
 	m_border.setPosition(-4, 4);
 	m_border.setOutlineThickness(4);
@@ -113,7 +122,7 @@ void Highway::update(u32 songTime) {
 	for (u8 i = 0 ; i < 5 ; ++i)
 		m_frets[i].update();
 
-	const ChartNote *nextNote = m_chart.getNextNote(songTime + 1000);
+	const ChartNote *nextNote = m_chart.getNextNote(songTime + 2000);
 	if (nextNote && (m_noteQueue.empty() || m_noteQueue.back().note().id != nextNote->id)) {
 		m_noteQueue.emplace_back(*nextNote);
 	}
@@ -124,13 +133,19 @@ void Highway::update(u32 songTime) {
 	}
 
 	for (auto &it : m_noteQueue) {
-		float y = m_strumBar.getPosition().y + songTime - it.note().time;
+		float y = m_strumBar.getPosition().y + ((int)songTime - (int)it.note().time) / 2.0f;
 		it.setPosition(it.note().type * 128 + 32, y);
 	}
+
+	m_background1.setPosition(m_background1.getPosition().x, (songTime / 2) % m_backgroundHeight);
+	m_background2.setPosition(m_background2.getPosition().x, ((int)songTime / 2) % m_backgroundHeight - m_backgroundHeight);
 }
 
 void Highway::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
+
+	target.draw(m_background1, states);
+	target.draw(m_background2, states);
 
 	// target.draw(m_border, states);
 	// target.draw(m_strumBar, states);

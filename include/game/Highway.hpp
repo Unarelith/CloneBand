@@ -44,6 +44,11 @@ class Highway : public sf::Drawable, public sf::Transformable {
 		sf::RectangleShape m_border;
 
 		std::array<Fret, 5> m_frets{0, 1, 2, 3, 4};
+
+		Image m_background1{"texture-highway"};
+		Image m_background2{"texture-highway"};
+		u16 m_backgroundWidth = 0;
+		u16 m_backgroundHeight = 0;
 };
 
 #endif // HIGHWAY_HPP_
