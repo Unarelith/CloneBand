@@ -14,10 +14,7 @@
 #ifndef CHART_HPP_
 #define CHART_HPP_
 
-#include <string>
-#include <vector>
-
-#include "IntTypes.hpp"
+#include "ChartParser.hpp"
 
 struct ChartNote {
 	ChartNote(u64 _id, u64 _position, u64 _time, u16 _type, u16 _length)
@@ -38,14 +35,10 @@ class Chart {
 
 	private:
 		void parse(const std::string &path);
-		bool parseSection(std::ifstream &chart);
-		bool parseNotes(std::ifstream &chart);
-
-		void skipWhitespaces(std::ifstream &chart);
 
 		std::vector<ChartNote> m_notes;
 
-		u64 m_time = 0;
+		ChartParser m_parser;
 };
 
 #endif // CHART_HPP_

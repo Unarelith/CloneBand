@@ -53,6 +53,7 @@ int CoreApplication::run() {
 
 void CoreApplication::createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle) {
 	m_window.create(sf::VideoMode(screenWidth, screenHeight), windowTitle, sf::Style::Close);
+	m_window.setKeyRepeatEnabled(false);
 }
 
 void CoreApplication::handleEvents() {

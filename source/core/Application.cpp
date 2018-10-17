@@ -24,7 +24,10 @@ void Application::init() {
 
 	m_resourceHandler.add<sf::Texture>("texture-frets").loadFromFile("graphics/frets.png");
 	m_resourceHandler.add<sf::Texture>("texture-fire").loadFromFile("graphics/fire.png");
-	m_resourceHandler.add<sf::Texture>("texture-highway").loadFromFile("graphics/highway.png");
+
+	auto &texture = m_resourceHandler.add<sf::Texture>("texture-highway");
+	texture.loadFromFile("graphics/highway.png");
+	texture.setSmooth(true);
 
 	ApplicationStateStack::getInstance().push<GameState>();
 }

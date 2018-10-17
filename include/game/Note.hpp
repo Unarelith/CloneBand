@@ -32,6 +32,8 @@ class Note : public sf::Drawable, public sf::Transformable {
 		Sprite m_sprite{"texture-frets", 32, 32};
 		sf::RectangleShape m_rect;
 
+		sf::RectangleShape m_bar;
+
 		const ChartNote *m_note;
 };
 

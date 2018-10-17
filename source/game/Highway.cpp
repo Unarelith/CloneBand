@@ -149,11 +149,13 @@ void Highway::update(u32 songTime) {
 void Highway::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
-	target.draw(m_background1, states);
-	target.draw(m_background2, states);
-
-	// target.draw(m_border, states);
-	// target.draw(m_strumBar, states);
+	if (m_skinEnabled) {
+		target.draw(m_background1, states);
+		target.draw(m_background2, states);
+	} else {
+		target.draw(m_border, states);
+		target.draw(m_strumBar, states);
+	}
 
 	for (auto &it : m_frets)
 		target.draw(it, states);

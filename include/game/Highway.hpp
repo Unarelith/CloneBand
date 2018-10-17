@@ -51,6 +51,8 @@ class Highway : public sf::Drawable, public sf::Transformable {
 		u16 m_backgroundHeight = 0;
 
 		u16 m_noteSpeed = 8;
+
+		bool m_skinEnabled = true;
 };
 
 #endif // HIGHWAY_HPP_

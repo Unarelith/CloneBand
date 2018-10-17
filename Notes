@@ -3,10 +3,14 @@ Notes
 # Todo
 
 • DONE: Add a `noteSpeed` variable in Highway
+• TODO: Fix BPM
+• TODO: Add a `StrumBar` class
 • TODO: Add a streak counter
+• TODO: Add support for held notes
 
 # Credits
 
 • Fire:        https://opengameart.org/content/simple-animate-fire
 • Frets/Notes: https://www.deviantart.com/elmind/art/Guitar-Hero-2D-Frets-and-Notes-76499411
+• Highway:     https://drive.google.com/drive/folders/0B9oGsFPP9zNSbzhDZkpzUHJOMWc
 

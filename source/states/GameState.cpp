@@ -28,11 +28,10 @@ GameState::GameState() {
 }
 
 void GameState::onEvent(const sf::Event &event) {
-	if (event.type == sf::Event::JoystickButtonPressed)
-		DEBUG(event.joystickButton.button)
-
-	if (event.type == sf::Event::JoystickMoved && event.joystickMove.axis == 7)
-		DEBUG(event.joystickMove.position);
+	// if (event.type == sf::Event::JoystickButtonPressed)
+	// 	DEBUG(event.joystickButton.button)
+	// if (event.type == sf::Event::JoystickMoved && event.joystickMove.axis == 7)
+	// 	DEBUG(event.joystickMove.position);
 
 	m_highway.onEvent(event);
 }

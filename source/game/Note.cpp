@@ -27,6 +27,12 @@ Note::Note(const ChartNote &note) : m_note(&note) {
 		case 4: m_rect.setFillColor(sf::Color::Magenta); break;
 		default: break;
 	}
+
+	m_bar.setSize({8, note.length});
+	m_bar.setPosition(32 - m_bar.getSize().x / 2, -m_bar.getSize().y + 4);
+	m_bar.setOutlineThickness(8);
+	m_bar.setOutlineColor(sf::Color::White);
+	m_bar.setFillColor(sf::Color::Black);
 }
 
 void Note::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -36,5 +42,8 @@ void Note::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 		target.draw(m_sprite, states);
 	else
 		target.draw(m_rect, states);
+
+	if (m_note->length)
+		target.draw(m_bar, states);
 }
 
