@@ -65,7 +65,7 @@ bool ChartParser::parseSection(std::ifstream &chart, std::vector<ChartNote> &not
 			throw EXCEPTION("Syntax error at char '", (int)chart.peek(), "'", chart.tellg());
 		}
 	}
-	else if (sectionName == "ExpertSingle") {
+	else if (sectionName == "MediumSingle") {
 		if (char c = chart.get() ; c != '{')
 			throw EXCEPTION("Syntax error at char '", (int)c, "'", chart.tellg());
 
@@ -173,7 +173,6 @@ bool ChartParser::parseNotes(std::ifstream &chart, std::vector<ChartNote> &notes
 	std::getline(chart, length, '\n');
 	int noteLength = std::stoi(length);
 
-	// float currentBpm = 127500 / 1000.0f;
 	float currentBpm = getCurrentBpm(notePosition);
 	if (!notes.empty()) {
 		m_time += 1000 * ((notePosition - notes.back().position) * 60 / (currentBpm * m_songResolution));

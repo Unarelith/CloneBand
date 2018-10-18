@@ -35,9 +35,11 @@ class Fret : public sf::Drawable, public sf::Transformable {
 
 		bool m_skinEnabled = true;
 		Sprite m_sprite{"texture-frets", 136, 82};
+		// Sprite m_sprite{"texture-frets", 150, 58};
 		sf::RectangleShape m_rect;
 
-		Sprite m_flames{"texture-flames", 32, 32};
+		// Sprite m_flames{"texture-flames", 32, 32};
+		Sprite m_flames{"texture-flames", 256, 128};
 };
 
 #endif // FRET_HPP_

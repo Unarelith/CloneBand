@@ -18,7 +18,7 @@
 #include "Highway.hpp"
 
 Highway::Highway(Chart &chart) : m_chart(chart) {
-	float backgroundScale = 6.5;
+	float backgroundScale = 1.5;
 	m_background1.setScale(backgroundScale, backgroundScale);
 	m_background2.setScale(backgroundScale, backgroundScale);
 
@@ -31,7 +31,7 @@ Highway::Highway(Chart &chart) : m_chart(chart) {
 	m_background1.setPosition(m_frets[0].width() * 5 / 2 - m_backgroundWidth / 2, 0);
 	m_background2.setPosition(m_frets[0].width() * 5 / 2 - m_backgroundWidth / 2, -m_backgroundHeight);
 
-	m_sideBars.setScale(0.725, 0.725);
+	m_sideBars.setScale(0.71, 0.71);
 	m_sideBars.setPosition(m_background1.getPosition().x, 0);
 
 	m_centerLines.setScale(1.16, 1.16);
