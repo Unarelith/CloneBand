@@ -43,7 +43,7 @@ Fret::Fret(u16 id) {
 	}
 
 	m_flames.setScale(1.5, 1.5);
-	m_flames.setPosition(-96 -64, -32 -32);
+	m_flames.setPosition(-96 -56, -32 -32);
 	m_flames.addAnimation(anim);
 	m_flames.setAnimated(false);
 }
@@ -75,12 +75,12 @@ void Fret::setFireState(bool hasFire) {
 void Fret::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
-	if (m_skinEnabled)
+	if (m_skinEnabled) {
 		target.draw(m_sprite, states);
+		if (m_flames.isAnimated())
+			target.draw(m_flames, states);
+	}
 	else
 		target.draw(m_rect, states);
-
-	if (m_flames.isAnimated())
-		target.draw(m_flames, states);
 }
 

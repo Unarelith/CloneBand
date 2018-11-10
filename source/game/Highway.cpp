@@ -15,7 +15,9 @@
 
 #include "Debug.hpp"
 #include "GameClock.hpp"
+#include "GameSettings.hpp"
 #include "Highway.hpp"
+#include "TickUtils.hpp"
 
 Highway::Highway(Chart &chart) : m_chart(chart) {
 	float backgroundScale = 1.5;
@@ -145,12 +147,12 @@ void Highway::update(u32 songTime) {
 	}
 
 	for (auto &it : m_noteQueue) {
-		float y = m_strumBar.getPosition().y + ((int)songTime - (int)it.note().time) * (m_noteSpeed / 12.0f);
+		float y = m_strumBar.getPosition().y + TickUtils::timeToWorldYPosition(((int)songTime - (int)it.note().time));
 		it.setPosition(it.note().type * m_frets[0].width() + 32, y);
 	}
 
-	m_background1.setPosition(m_background1.getPosition().x, int(songTime * (m_noteSpeed / 12.0f)) % m_backgroundHeight);
-	m_background2.setPosition(m_background2.getPosition().x, int(songTime * (m_noteSpeed / 12.0f)) % m_backgroundHeight - m_backgroundHeight);
+	m_background1.setPosition(m_background1.getPosition().x, (int)TickUtils::timeToWorldYPosition(songTime) % m_backgroundHeight);
+	m_background2.setPosition(m_background2.getPosition().x, (int)TickUtils::timeToWorldYPosition(songTime) % m_backgroundHeight - m_backgroundHeight);
 }
 
 void Highway::draw(sf::RenderTarget &target, sf::RenderStates states) const {

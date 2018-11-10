@@ -15,6 +15,7 @@
 
 #include "Exception.hpp"
 #include "Chart.hpp"
+#include "TickUtils.hpp"
 
 void ChartParser::parse(const std::string &path, std::vector<ChartNote> &notes) {
 	std::ifstream chart(path);
@@ -175,7 +176,8 @@ bool ChartParser::parseNotes(std::ifstream &chart, std::vector<ChartNote> &notes
 
 	float currentBpm = getCurrentBpm(notePosition);
 	if (!notes.empty()) {
-		m_time += 1000 * ((notePosition - notes.back().position) * 60 / (currentBpm * m_songResolution));
+		// m_time += 1000 * ((notePosition - notes.back().position) * 60 / (currentBpm * m_songResolution));
+		m_time += 1000 * TickUtils::disToTime(notes.back().position, notePosition, m_songResolution, currentBpm);
 	}
 	int noteTime = m_time + m_songOffset;
 
