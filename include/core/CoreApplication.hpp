@@ -14,12 +14,11 @@
 #ifndef COREAPPLICATION_HPP_
 #define COREAPPLICATION_HPP_
 
-#include <SFML/Graphics.hpp>
-
 #include "ApplicationStateStack.hpp"
 #include "GameClock.hpp"
 #include "KeyboardHandler.hpp"
 #include "ResourceHandler.hpp"
+#include "Window.hpp"
 
 class CoreApplication {
 	public:
@@ -30,9 +29,9 @@ class CoreApplication {
 		int run();
 
 	protected:
-		void createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle);
+		void createWindow(const std::string &caption, u16 screenWidth, u16 screenHeight);
 
-		sf::RenderWindow m_window;
+		Window m_window;
 
 		ApplicationStateStack m_stateStack;
 

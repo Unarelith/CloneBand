@@ -13,6 +13,8 @@
  */
 #include <algorithm>
 
+// #include <glm/gtc/matrix_transform.hpp>
+
 #include "Debug.hpp"
 #include "GameClock.hpp"
 #include "GameSettings.hpp"
@@ -24,8 +26,8 @@ Highway::Highway(Chart &chart) : m_chart(chart) {
 	m_background1.setScale(backgroundScale, backgroundScale);
 	m_background2.setScale(backgroundScale, backgroundScale);
 
-	m_background1.setTileColor(0, sf::Color(127, 127, 127));
-	m_background2.setTileColor(0, sf::Color(127, 127, 127));
+	// m_background1.setColor(Color(127, 127, 127));
+	// m_background2.setColor(Color(127, 127, 127));
 
 	m_backgroundWidth = m_background1.width() * m_background1.getScale().x;
 	m_backgroundHeight = m_background1.height() * m_background1.getScale().y;
@@ -39,21 +41,12 @@ Highway::Highway(Chart &chart) : m_chart(chart) {
 	m_centerLines.setScale(1.16, 1.16);
 	m_centerLines.setPosition(0, 0);
 
-	m_border.setSize({m_frets[0].width() * 5 + 8, 892});
-	m_border.setPosition(-4, 4);
-	m_border.setOutlineThickness(4);
-	m_border.setOutlineColor(sf::Color::White);
-	m_border.setFillColor(sf::Color::Black);
-
-	m_strumBar.setSize({m_frets[0].width() * 5 - 8, m_frets[0].height() - 8});
-	m_strumBar.setPosition(4, 700);
-	m_strumBar.setOutlineThickness(4);
-	m_strumBar.setOutlineColor(sf::Color::White);
-	m_strumBar.setFillColor(sf::Color::Black);
-
 	for (u8 i = 0 ; i < 5 ; ++i) {
-		m_frets[i].setPosition(i * m_frets[0].width() + 32, 725);
+		m_frets[i].setPosition(i * m_frets[0].width() + 32, 1010);
 	}
+
+	// setRotation(-30.0f, glm::vec3{1, 0, 0});
+	// setRotation(-30.0f, Vector3{1, 0, 0});
 }
 
 void Highway::onEvent(const sf::Event &event) {
@@ -91,8 +84,8 @@ void Highway::handleGamepad(const sf::Event &event) {
 
 		if (event.joystickButton.button == 0) key = 0;
 		if (event.joystickButton.button == 1) key = 1;
-		if (event.joystickButton.button == 2) key = 3;
 		if (event.joystickButton.button == 3) key = 2;
+		if (event.joystickButton.button == 2) key = 3;
 		if (event.joystickButton.button == 4) key = 4;
 
 		if (key != -1) {
@@ -105,7 +98,13 @@ void Highway::handleGamepad(const sf::Event &event) {
 		}
 	}
 	else if (event.type == sf::Event::JoystickMoved && event.joystickMove.axis == 7 && event.joystickMove.position) {
-		keyPressed(key);
+		int i;
+		for (i = 4 ; i >= 0 ; i--) {
+			if (m_frets[i].isPressed()) {
+				keyPressed(i);
+				return;
+			}
+		}
 	}
 }
 
@@ -117,7 +116,7 @@ void Highway::keyPressed(u8 key) {
 
 	if (it != m_noteQueue.end()) {
 		u64 time = GameClock::getTicks();
-		// DEBUG(time, it->note().time, it->note().position);
+		// DEBUG((int)key, time, it->note().time, it->note().position);
 		if (time < it->note().time + 150
 		 && time > it->note().time - 150) {
 			// DEBUG("lol", key, it->note().type);
@@ -130,14 +129,14 @@ void Highway::keyPressed(u8 key) {
 void Highway::keyReleased(u8 key) {
 }
 
-void Highway::update(u32 songTime) {
+void Highway::update(Camera &camera, u32 songTime) {
 	for (u8 i = 0 ; i < 5 ; ++i)
 		m_frets[i].update();
 
 	// FIXME: Use note speed instead of an arbitrary value
 	const ChartNote *nextNote = m_chart.getNextNote(songTime + 2000);
 	if (nextNote && (m_noteQueue.empty() || m_noteQueue.back().note().id != nextNote->id)) {
-		m_noteQueue.emplace_back(*nextNote);
+		m_noteQueue.emplace_back(camera, *nextNote);
 	}
 
 	// FIXME: Use note speed instead of an arbitrary value
@@ -147,7 +146,7 @@ void Highway::update(u32 songTime) {
 	}
 
 	for (auto &it : m_noteQueue) {
-		float y = m_strumBar.getPosition().y + TickUtils::timeToWorldYPosition(((int)songTime - (int)it.note().time));
+		float y = 1000 + TickUtils::timeToWorldYPosition(((int)songTime - (int)it.note().time));
 		it.setPosition(it.note().type * m_frets[0].width() + 32, y);
 	}
 
@@ -155,18 +154,13 @@ void Highway::update(u32 songTime) {
 	m_background2.setPosition(m_background2.getPosition().x, (int)TickUtils::timeToWorldYPosition(songTime) % m_backgroundHeight - m_backgroundHeight);
 }
 
-void Highway::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+void Highway::draw(RenderTarget &target, RenderStates states) const {
 	states.transform *= getTransform();
 
-	if (m_skinEnabled) {
-		target.draw(m_background1, states);
-		target.draw(m_background2, states);
-		target.draw(m_sideBars, states);
-		target.draw(m_centerLines, states);
-	} else {
-		target.draw(m_border, states);
-		target.draw(m_strumBar, states);
-	}
+	target.draw(m_background1, states);
+	target.draw(m_background2, states);
+	target.draw(m_sideBars, states);
+	target.draw(m_centerLines, states);
 
 	for (auto &it : m_frets)
 		target.draw(it, states);

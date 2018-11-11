@@ -21,7 +21,7 @@
 void Application::init() {
 	CoreApplication::init();
 
-	createWindow(Config::screenWidth, Config::screenHeight, Config::windowTitle);
+	createWindow(Config::windowTitle, Config::screenWidth, Config::screenHeight);
 
 	m_resourceHandler.loadConfigFile<TextureLoader>("resources/config/textures.xml");
 

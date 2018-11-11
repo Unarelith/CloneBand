@@ -14,14 +14,14 @@
 #ifndef APPLICATIONSTATE_HPP_
 #define APPLICATIONSTATE_HPP_
 
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Transformable.hpp>
-
 #include <SFML/Window/Event.hpp>
+
+#include "IDrawable.hpp"
+#include "Transformable.hpp"
 
 class ApplicationStateStack;
 
-class ApplicationState : public sf::Drawable, public sf::Transformable {
+class ApplicationState : public IDrawable, public Transformable {
 	public:
 		ApplicationState(ApplicationState *parent = nullptr) : m_parent(parent) {}
 		ApplicationState(const ApplicationState &) = delete;

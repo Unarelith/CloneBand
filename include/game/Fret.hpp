@@ -16,11 +16,13 @@
 
 #include "Sprite.hpp"
 
-class Fret : public sf::Drawable, public sf::Transformable {
+class Fret : public IDrawable, public Transformable {
 	public:
 		Fret(u16 id);
 
 		void update();
+
+		bool isPressed() const { return m_isPressed; }
 
 		void setPressedState(bool isPressed);
 		void setFireState(bool hasFire);
@@ -29,16 +31,13 @@ class Fret : public sf::Drawable, public sf::Transformable {
 		float height() { return m_sprite.frameHeight(); }
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(RenderTarget &target, RenderStates states) const override;
 
 		u16 m_id;
 
-		bool m_skinEnabled = true;
-		Sprite m_sprite{"texture-frets", 136, 82};
-		// Sprite m_sprite{"texture-frets", 150, 58};
-		sf::RectangleShape m_rect;
+		bool m_isPressed = false;
 
-		// Sprite m_flames{"texture-flames", 32, 32};
+		Sprite m_sprite{"texture-frets", 136, 82};
 		Sprite m_flames{"texture-flames", 256, 128};
 };
 

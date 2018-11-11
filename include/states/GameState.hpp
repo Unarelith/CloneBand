@@ -17,7 +17,9 @@
 #include <SFML/Audio.hpp>
 
 #include "ApplicationState.hpp"
+#include "Camera.hpp"
 #include "Highway.hpp"
+#include "Shader.hpp"
 
 class GameState : public ApplicationState {
 	public:
@@ -28,7 +30,7 @@ class GameState : public ApplicationState {
 		void update() override;
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(RenderTarget &target, RenderStates states) const override;
 
 		sf::Music m_music;
 		Chart m_chart{"charts/WakingTheDemon/notes.chart"};
@@ -37,6 +39,12 @@ class GameState : public ApplicationState {
 		u32 m_previousFrameTime = 0;
 		u32 m_lastReportedPlayheadPosition = 0;
 		u32 m_songTime = 0;
+
+		Camera m_camera{90.0f, 0.1f, 1600.0f};
+		Shader m_shader;
+
+		glm::mat4 m_projectionMatrix2d;
+		glm::mat4 m_projectionMatrix3d;
 };
 
 #endif // GAMESTATE_HPP_

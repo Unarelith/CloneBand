@@ -18,7 +18,7 @@ Sprite::Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight, 
 	m_frameWidth = frameWidth;
 	m_frameHeight = frameHeight;
 
-	setPosRect(0, 0, frameWidth, frameHeight);
+	// setPosRect(0, 0, frameWidth, frameHeight);
 
 	setCurrentFrame(0);
 

@@ -5,7 +5,7 @@
  *
  *    Description:
  *
- *        Created:  17/01/2018 19:46:34
+ *        Created:  20/09/2014 16:21:56
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
@@ -14,41 +14,45 @@
 #ifndef IMAGE_HPP_
 #define IMAGE_HPP_
 
-#include <SFML/Graphics.hpp>
+#include "Color.hpp"
+#include "IDrawable.hpp"
+#include "Rect.hpp"
+#include "Transformable.hpp"
+#include "VertexBuffer.hpp"
 
-#include "IntTypes.hpp"
-
-class Image : public sf::Drawable, public sf::Transformable {
+class Image : public IDrawable, public Transformable {
 	public:
 		Image() = default;
 		Image(const std::string &textureName);
+		Image(const sf::Texture &texture);
 
-		void load(const char *textureName);
+		void load(const std::string &textureName);
+		void load(const sf::Texture &texture);
 
-		void setTile(u16 id, float x, float y, u16 width, u16 height, float clipX, float clipY, u16 clipWidth, u16 clipHeight, sf::Color color = sf::Color::White);
-		void setTilePosRect(u16 id, float x, float y, u16 width, u16 height);
-		void setTileClipRect(u16 id, float x, float y, u16 clipWidth, u16 clipHeight);
-		void setTileColor(u16 id, sf::Color color);
-
-		void setTileCount(u16 tileCount);
-
+		const FloatRect &clipRect() const { return m_clipRect; }
 		void setClipRect(float x, float y, u16 width, u16 height);
-		void setPosRect(float x, float y, u16 width, u16 height);
 
-		u16 width() const { return m_texture->getSize().x; }
-		u16 height() const { return m_texture->getSize().y; }
+		u16 width() const { return m_width; }
+		u16 height() const { return m_height; }
 
-		const sf::Texture *texture() const { return m_texture; }
+		void setColor(const Color &color) { m_color = color; updateVertexBuffer(); }
 
 	protected:
-		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-
-		std::string m_textureName;
+		void draw(RenderTarget &target, RenderStates states) const override;
 
 	private:
-		sf::Texture *m_texture;
+		void updateVertexBuffer() const;
 
-		sf::VertexArray m_vertices;
+		const sf::Texture *m_texture = nullptr;
+
+		u16 m_width = 0;
+		u16 m_height = 0;
+
+		FloatRect m_clipRect;
+
+		VertexBuffer m_vbo;
+
+		Color m_color = Color::White;
 };
 
 #endif // IMAGE_HPP_

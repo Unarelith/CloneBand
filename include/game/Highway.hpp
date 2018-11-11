@@ -16,16 +16,19 @@
 
 #include <deque>
 
+#include <SFML/Window/Event.hpp>
+
+#include "Camera.hpp"
 #include "Note.hpp"
 #include "Fret.hpp"
 
-class Highway : public sf::Drawable, public sf::Transformable {
+class Highway : public IDrawable, public Transformable {
 	public:
 		Highway(Chart &chart);
 
 		void onEvent(const sf::Event &event);
 
-		void update(u32 songTime);
+		void update(Camera &camera, u32 songTime);
 
 	private:
 		void handleKeyboard(const sf::Event &event);
@@ -34,14 +37,11 @@ class Highway : public sf::Drawable, public sf::Transformable {
 		void keyPressed(u8 key);
 		void keyReleased(u8 key);
 
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(RenderTarget &target, RenderStates states) const override;
 
 		Chart &m_chart;
 
 		std::deque<Note> m_noteQueue;
-
-		sf::RectangleShape m_strumBar;
-		sf::RectangleShape m_border;
 
 		std::array<Fret, 5> m_frets{0, 1, 2, 3, 4};
 

@@ -14,14 +14,12 @@
 #ifndef NOTE_HPP_
 #define NOTE_HPP_
 
-#include <SFML/Graphics.hpp>
-
 #include "Chart.hpp"
-#include "Sprite.hpp"
+#include "Billboard.hpp"
 
-class Note : public sf::Drawable, public sf::Transformable {
+class Note : public IDrawable, public Transformable {
 	public:
-		Note(const ChartNote &note);
+		Note(Camera &camera, const ChartNote &note);
 
 		const ChartNote &note() const { return *m_note; }
 
@@ -29,13 +27,9 @@ class Note : public sf::Drawable, public sf::Transformable {
 		u16 height() { return m_sprite.frameHeight(); }
 
 	private:
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void draw(RenderTarget &target, RenderStates states) const override;
 
-		bool m_skinEnabled = true;
-		Sprite m_sprite{"texture-notes", 132, 132};
-		sf::RectangleShape m_rect;
-
-		sf::RectangleShape m_bar;
+		Billboard m_sprite{"texture-notes", 132, 132};
 		Image m_tail{"texture-tail"};
 
 		const ChartNote *m_note;

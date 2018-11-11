@@ -56,6 +56,24 @@ include_directories(${TINYXML2_INCLUDE_DIRS})
 link_directories(${TINYXML2_LIBRARY_DIRS})
 
 #------------------------------------------------------------------------------
+# - OpenGL
+#------------------------------------------------------------------------------
+set(OpenGL_GL_PREFERENCE "LEGACY")
+
+find_package(OpenGL REQUIRED)
+find_package(GLM REQUIRED)
+
+if(NOT OPENGL_FOUND)
+	message(FATAL_ERROR "OpenGL not found!")
+endif(NOT OPENGL_FOUND)
+
+if(NOT GLM_FOUND)
+	message(FATAL_ERROR "glm not found!")
+endif(NOT GLM_FOUND)
+
+include_directories(${GLM_INCLUDE_DIRS})
+
+#------------------------------------------------------------------------------
 # - SFML
 #------------------------------------------------------------------------------
 find_package(SFML COMPONENTS audio graphics network system window REQUIRED)
@@ -70,6 +88,7 @@ include_directories(${SFML_INCLUDE_DIRS})
 #------------------------------------------------------------------------------
 target_link_libraries(${CMAKE_PROJECT_NAME}
                       ${TINYXML2_LIBRARIES}
+                      ${OPENGL_LIBRARIES}
                       sfml-audio
                       sfml-graphics
                       sfml-network

@@ -51,9 +51,8 @@ int CoreApplication::run() {
 	return 0;
 }
 
-void CoreApplication::createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle) {
-	m_window.create(sf::VideoMode(screenWidth, screenHeight), windowTitle, sf::Style::Close);
-	m_window.setKeyRepeatEnabled(false);
+void CoreApplication::createWindow(const std::string &caption, u16 screenWidth, u16 screenHeight) {
+	m_window.open(caption, screenWidth, screenHeight);
 }
 
 void CoreApplication::handleEvents() {
