@@ -15,11 +15,11 @@
 #define NOTE_HPP_
 
 #include "Chart.hpp"
-#include "Billboard.hpp"
+#include "Sprite.hpp"
 
 class Note : public IDrawable, public Transformable {
 	public:
-		Note(Camera &camera, const ChartNote &note);
+		Note(const ChartNote &note);
 
 		const ChartNote &note() const { return *m_note; }
 
@@ -29,7 +29,7 @@ class Note : public IDrawable, public Transformable {
 	private:
 		void draw(RenderTarget &target, RenderStates states) const override;
 
-		Billboard m_sprite{"texture-notes", 132, 132};
+		Sprite m_sprite{"texture-notes", 132, 132};
 		Image m_tail{"texture-tail"};
 
 		const ChartNote *m_note;

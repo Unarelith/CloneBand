@@ -13,7 +13,7 @@
  */
 #include "Note.hpp"
 
-Note::Note(Camera &camera, const ChartNote &note) : m_note(&note) {
+Note::Note(const ChartNote &note) : m_note(&note) {
 	// m_sprite.setCamera(camera);
 	// m_sprite.setPosition(-34, 0);
 

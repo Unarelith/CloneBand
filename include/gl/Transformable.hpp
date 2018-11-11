@@ -1,77 +1,66 @@
-////////////////////////////////////////////////////////////
-//
-// SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2014 Laurent Gomila (laurent.gom@gmail.com)
-//
-// This software is provided 'as-is', without any express or implied warranty.
-// In no event will the authors be held liable for any damages arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it freely,
-// subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented;
-//    you must not claim that you wrote the original software.
-//    If you use this software in a product, an acknowledgment
-//    in the product documentation would be appreciated but is not required.
-//
-// 2. Altered source versions must be plainly marked as such,
-//    and must not be misrepresented as being the original software.
-//
-// 3. This notice may not be removed or altered from any source distribution.
-//
-////////////////////////////////////////////////////////////
+/*
+ * =====================================================================================
+ *
+ *       Filename:  Transformable.hpp
+ *
+ *    Description:
+ *
+ *        Created:  11/11/2018 18:06:05
+ *
+ *         Author:  Quentin Bazin, <quent42340@gmail.com>
+ *
+ * =====================================================================================
+ */
 #ifndef TRANSFORMABLE_HPP_
 #define TRANSFORMABLE_HPP_
-
-#include <SFML/Graphics/Export.hpp>
 
 #include "Transform.hpp"
 
 class Transformable {
 	public:
-		Transformable();
-		virtual ~Transformable();
+		virtual ~Transformable() = default;
 
 		void setPosition(float x, float y, float z = 0);
-		void setPosition(const Vector3f& position);
-
-		void setRotation(float angle);
-		void setRotation(float angle, const Vector3f& axis);
-
-		void setScale(float factorX, float factorY, float factorZ = 1);
-		void setScale(const Vector3f& factors);
+		void setPosition(const Vector3f &position) { setPosition(position.x, position.y, position.z); }
 
 		void setOrigin(float x, float y, float z = 0);
-		void setOrigin(const Vector3f& origin);
+		void setOrigin(const Vector3f &origin) { setOrigin(origin.x, origin.y, origin.z); }
 
-		const Vector3f& getPosition() const;
-		float getRotation() const;
-		const Vector3f& getScale() const;
-		const Vector3f& getOrigin() const;
+		void setScale(float factorX, float factorY, float factorZ = 1);
+		void setScale(const Vector3f &factors) { setScale(factors.x, factors.y, factors.z); }
+
+		void setRotation(float angle) { setRotation(angle, {0, 0, 1}); }
+		void setRotation(float angle, const Vector3f &axis);
+
+		const Vector3f& getPosition() const { return m_position; }
+		const Vector3f& getOrigin()   const { return m_origin; }
+		const Vector3f& getScale()    const { return m_scale; }
+		float           getRotation() const { return m_rotation; }
 
 		void move(float offsetX, float offsetY, float offsetZ = 0);
-		void move(const Vector3f& offset);
-
-		void rotate(float angle);
-		void rotate(float angle, const Vector3f& axis);
+		void move(const Vector3f &offset);
 
 		void scale(float factorX, float factorY, float factorZ = 1);
-		void scale(const Vector3f& factor);
+		void scale(const Vector3f &factor);
+
+		void rotate(float angle);
+		void rotate(float angle, const Vector3f &axis);
 
 		const Transform& getTransform() const;
 		const Transform& getInverseTransform() const;
 
 	private:
-		Vector3f          m_origin;                     ///< Origin of translation/rotation/scaling of the object
-		Vector3f          m_position;                   ///< Position of the object in the 3D world
-		float             m_rotation;                   ///< Orientation of the object, in degrees
-		Vector3f          m_scale;                      ///< Scale of the object
-		mutable Transform m_rotation_transform;         ///< Combined transformation of the object
-		mutable Transform m_transform;                  ///< Combined transformation of the object
-		mutable bool      m_transformNeedUpdate;        ///< Does the transform need to be recomputed?
-		mutable Transform m_inverseTransform;           ///< Combined transformation of the object
-		mutable bool      m_inverseTransformNeedUpdate; ///< Does the transform need to be recomputed?
+		Vector3f m_position{0, 0, 0};
+		Vector3f m_origin{0, 0, 0};
+		Vector3f m_scale{1, 1, 1};
+		float m_rotation = 0;
+
+		mutable Transform m_transform;
+		mutable Transform m_inverseTransform;
+		mutable Transform m_rotationTransform;
+
+		mutable bool m_transformNeedUpdate = true;
+		mutable bool m_inverseTransformNeedUpdate = true;
 };
 
 #endif // TRANSFORMABLE_HPP_

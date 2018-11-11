@@ -28,7 +28,7 @@ class Highway : public IDrawable, public Transformable {
 
 		void onEvent(const sf::Event &event);
 
-		void update(Camera &camera, u32 songTime);
+		void update(u32 songTime);
 
 	private:
 		void handleKeyboard(const sf::Event &event);

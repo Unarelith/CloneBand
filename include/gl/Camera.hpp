@@ -1,56 +1,74 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  Camera.hpp
+ *
+ *    Description:
+ *
+ *        Created:  11/11/2018 17:58:18
+ *
+ *         Author:  Quentin Bazin, <quent42340@gmail.com>
+ *
+ * =====================================================================================
+ */
 #ifndef CAMERA_HPP_
 #define CAMERA_HPP_
 
 #include "Transformable.hpp"
-#include "View.hpp"
 
-class Camera : public View {
+class Camera {
 	public:
 		Camera(float fov, float near, float far);
 		virtual ~Camera() = default;
 
-		void setPosition(float x, float y, float z);
-		void setPosition(const Vector3f& position);
+		const Vector3f &getPosition() const { return m_position; }
+		const Vector3f &getDirection() const { return m_direction; }
+		const Vector3f &getUpVector() const { return m_upVector; }
 
-		virtual const Vector3f& getPosition() const;
+		float getFieldOfView() const { return m_fieldOfView; }
+		float getAspectRatio() const { return m_aspect; }
+		float getNearClippingPlane() const { return m_nearPlane; }
+		float getFarClippingPlane() const { return m_farPlane; }
 
-		void setDirection(float x, float y, float z);
-		void setDirection(const Vector3f& direction);
+		void setPosition(float x, float y, float z) { setPosition(Vector3f(x, y, z)); }
+		void setPosition(const Vector3f &position);
 
-		const Vector3f& getDirection() const;
+		void setDirection(float x, float y, float z) { setDirection(Vector3f(x, y, z)); }
+		void setDirection(const Vector3f &direction);
 
-		void setUpVector(float x, float y, float z);
-		void setUpVector(const Vector3f& upVector);
-		const Vector3f& getUpVector() const;
+		void setTargetPosition(float x, float y, float z) { setTargetPosition(Vector3f(x, y, z)); }
+		void setTargetPosition(const Vector3f &target);
 
-		void setScale(float factorX, float factorY, float factorZ);
-		void setScale(const Vector3f& factors);
-
-		const Vector3f& getScale() const;
+		void setUpVector(float x, float y, float z) { setUpVector(Vector3f(x, y, z)); }
+		void setUpVector(const Vector3f &upVector);
 
 		void setFieldOfView(float fov);
-
-		float getFieldOfView() const;
-
+		void setAspectRatio(float aspect);
 		void setNearClippingPlane(float distance);
-		float getNearClippingPlane() const;
-
 		void setFarClippingPlane(float distance);
-		float getFarClippingPlane() const;
 
-		void scale(float factorX, float factorY, float factorZ);
-		void scale(const Vector3f& factor);
-
-		virtual const Transform& getTransform() const;
-		virtual const Transform& getViewTransform() const;
+		virtual const Transform &getTransform() const;
+		virtual const Transform &getViewTransform() const;
 
 	private:
-		float    m_fieldOfView; ///< Field of view of this camera, in degrees
-		float    m_nearPlane;   ///< The distance to the near clipping plane
-		float    m_farPlane;    ///< The distance to the far clipping plane
-		Vector3f m_direction;   ///< The direction the camera is facing in
-		Vector3f m_upVector;    ///< The up vector of the camera
-		Vector3f m_scale;       ///< The scaling that is applied after the perspective transform
+		Vector3f m_position{0, 0, 0};
+		Vector3f m_direction{0, 0, -1};
+		Vector3f m_upVector{0, 1, 0};
+
+		float m_fieldOfView = 90.0f;
+		float m_aspect = 1.0f;
+		float m_nearPlane = 0.1f;
+		float m_farPlane = 1000.0f;
+
+		mutable Transform m_transform;
+		mutable Transform m_inverseTransform;
+		mutable Transform m_viewTransform;
+		mutable Transform m_inverseViewTransform;
+
+		mutable bool m_transformUpdated = false;
+		mutable bool m_invTransformUpdated = false;
+		mutable bool m_viewTransformUpdated = false;
+		mutable bool m_invViewTransformUpdated = false;
 };
 
 #endif // CAMERA_HPP_

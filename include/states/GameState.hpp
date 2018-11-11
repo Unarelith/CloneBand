@@ -40,11 +40,12 @@ class GameState : public ApplicationState {
 		u32 m_lastReportedPlayheadPosition = 0;
 		u32 m_songTime = 0;
 
-		Camera m_camera{90.0f, 0.1f, 1600.0f};
+		Camera m_camera{90.0f, 0.1f, 1000.0f};
 		Shader m_shader;
 
 		glm::mat4 m_projectionMatrix2d;
 		glm::mat4 m_projectionMatrix3d;
+		glm::mat4 m_viewMatrix;
 };
 
 #endif // GAMESTATE_HPP_

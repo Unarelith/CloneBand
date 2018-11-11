@@ -126,17 +126,17 @@ void Highway::keyPressed(u8 key) {
 	}
 }
 
-void Highway::keyReleased(u8 key) {
+void Highway::keyReleased(u8) {
 }
 
-void Highway::update(Camera &camera, u32 songTime) {
+void Highway::update(u32 songTime) {
 	for (u8 i = 0 ; i < 5 ; ++i)
 		m_frets[i].update();
 
 	// FIXME: Use note speed instead of an arbitrary value
 	const ChartNote *nextNote = m_chart.getNextNote(songTime + 2000);
 	if (nextNote && (m_noteQueue.empty() || m_noteQueue.back().note().id != nextNote->id)) {
-		m_noteQueue.emplace_back(camera, *nextNote);
+		m_noteQueue.emplace_back(*nextNote);
 	}
 
 	// FIXME: Use note speed instead of an arbitrary value

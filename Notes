@@ -3,8 +3,8 @@ Notes
 # Todo
 
 • DONE: Add a `noteSpeed` variable in Highway
-• TODO: Remove `Transform`, `Transformable`, `View`, `Camera`, `Billboard`, etc...
-   → Use GLM to replace them
+• DONE: Remove `Transform`, `Transformable`, `View`, `Camera`, `Billboard`, etc...
+   → DONE: Use GLM to replace them
 • TODO: Fix BPM
 • TODO: Add a `StrumBar` class
 • TODO: Add a streak counter

@@ -35,13 +35,13 @@ GameState::GameState() {
 	m_shader.linkProgram();
 
 	m_projectionMatrix2d = glm::ortho(0.0f, (float)Config::screenWidth, (float)Config::screenHeight, 0.0f);
-	m_projectionMatrix3d = glm::perspective(45.0f, (float)Config::screenWidth / Config::screenHeight, 0.1f, 3000.0f);
+	// m_projectionMatrix3d = glm::perspective(90.0f, (float)Config::screenWidth / Config::screenHeight, 0.1f, 3000.0f);
 
 	// m_viewMatrix = glm::lookAt(glm::vec3(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, -1000),
 	//                            glm::vec3(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0),
 	//                            glm::vec3(0, -1, 0));
 
-	// m_viewMatrix = glm::lookAt(glm::vec3(Config::screenWidth / 2.0f, Config::screenHeight + 400, -1000),
+	// m_viewMatrix = glm::lookAt(glm::vec3(Config::screenWidth / 2.0f, Config::screenHeight + 100, -600),
 	//                            glm::vec3(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0),
 	//                            glm::vec3(0, -1, 0));
 
@@ -49,9 +49,9 @@ GameState::GameState() {
 	//                            glm::vec3(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0),
 	//                            glm::vec3(0, -1, 0));
 
-	m_camera.scale((float)Config::screenHeight / Config::screenWidth, 1.0f, 1.0f);
-	m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f + 1000, -1000);
-	m_camera.setDirection(0, -0.4, 0.5);
+	m_camera.setAspectRatio((float)Config::screenWidth / Config::screenHeight);
+	m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight + 100, -600);
+	m_camera.setTargetPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0);
 	m_camera.setUpVector(0, -1, 0);
 }
 
@@ -67,15 +67,15 @@ void GameState::update() {
 		m_lastReportedPlayheadPosition = m_music.getPlayingOffset().asMilliseconds();
 	}
 
-	m_highway.update(m_camera, m_songTime);
+	m_highway.update(m_songTime);
 }
 
 void GameState::draw(RenderTarget &target, RenderStates states) const {
 	states.projectionTransform *= m_camera.getTransform();
 	states.viewTransform *= m_camera.getViewTransform();
 
-	// states.projectionMatrix = &m_projectionMatrix3d;
-	// states.viewMatrix = &m_viewMatrix;
+	// states.projectionTransform = m_projectionMatrix3d;
+	// states.viewTransform = m_viewMatrix;
 
 	states.shader = &m_shader;
 
