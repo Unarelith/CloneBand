@@ -47,8 +47,8 @@ class Camera {
 		void setNearClippingPlane(float distance);
 		void setFarClippingPlane(float distance);
 
-		virtual const Transform &getTransform() const;
-		virtual const Transform &getViewTransform() const;
+		virtual const Transform &getProjectionMatrix() const;
+		virtual const Transform &getViewMatrix() const;
 
 	private:
 		Vector3f m_position{0, 0, 0};
@@ -61,14 +61,10 @@ class Camera {
 		float m_farPlane = 1000.0f;
 
 		mutable Transform m_transform;
-		mutable Transform m_inverseTransform;
 		mutable Transform m_viewTransform;
-		mutable Transform m_inverseViewTransform;
 
 		mutable bool m_transformUpdated = false;
-		mutable bool m_invTransformUpdated = false;
 		mutable bool m_viewTransformUpdated = false;
-		mutable bool m_invViewTransformUpdated = false;
 };
 
 #endif // CAMERA_HPP_

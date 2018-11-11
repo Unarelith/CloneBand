@@ -30,9 +30,9 @@ void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size
 
 	VertexBuffer::bind(&vertexBuffer);
 
-	states.shader->setUniform("u_projectionMatrix", states.projectionTransform);
+	states.shader->setUniform("u_projectionMatrix", states.projectionMatrix);
+	states.shader->setUniform("u_viewMatrix", states.viewMatrix);
 	states.shader->setUniform("u_modelMatrix", states.transform);
-	states.shader->setUniform("u_viewMatrix", states.viewTransform);
 
 	if (states.vertexAttributes & VertexAttribute::Coord3d) {
 		states.shader->enableVertexAttribArray("coord3d");

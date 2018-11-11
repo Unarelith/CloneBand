@@ -14,12 +14,9 @@
 #include "Note.hpp"
 
 Note::Note(const ChartNote &note) : m_note(&note) {
-	// m_sprite.setCamera(camera);
-	// m_sprite.setPosition(-34, 0);
-
-	m_sprite.setPosition(-34, 132);
-	m_sprite.setOrigin(0, 132);
-	m_sprite.rotate(30.0f, Vector3{1, 0, 0});
+	m_sprite.setPosition(-34, 80);
+	m_sprite.setOrigin(0, 80);
+	m_sprite.setRotation(30.0f, Vector3{1, 0, 0});
 
 	if (!note.isHopo)
 		m_sprite.setCurrentFrame(note.type);

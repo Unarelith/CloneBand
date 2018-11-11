@@ -38,16 +38,12 @@ namespace VertexAttribute {
 }
 
 struct RenderStates {
-	// const glm::mat4 *projectionMatrix = nullptr;
-	// const glm::mat4 *viewMatrix = nullptr;
-	// const glm::mat4 *modelMatrix = nullptr;
+	Transform projectionMatrix;
+	Transform viewMatrix;
+	Transform transform;
 
 	const sf::Texture *texture = nullptr;
 	const Shader *shader = nullptr;
-
-	Transform projectionTransform;
-	Transform viewTransform;
-	Transform transform;
 
 	u8 vertexAttributes = VertexAttribute::All;
 
