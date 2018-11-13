@@ -16,16 +16,9 @@
 
 #include "Config.hpp"
 #include "Debug.hpp"
-#include "GameClock.hpp"
 #include "GameState.hpp"
 
 GameState::GameState() {
-	m_music.openFromFile("charts/WakingTheDemon/song.ogg");
-
-	m_previousFrameTime = GameClock::getTicks();
-	m_lastReportedPlayheadPosition = 0;
-	m_music.play();
-
 	m_highway.setPosition(Config::screenWidth / 2 - 5 * 136 / 2, 0);
 
 	m_shader.createProgram();
@@ -39,8 +32,8 @@ GameState::GameState() {
 	m_camera.setUpVector(0, -1, 0);
 
 	// m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight + 400, -100);
-	m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight + 100, -600);
-	m_camera.setTargetPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0);
+	m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight + 300, -600);
+	m_camera.setTargetPosition(Config::screenWidth / 2.0f, 0, 0);
 
 	// m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, -1000);
 	// m_camera.setTargetPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0);
@@ -51,14 +44,8 @@ void GameState::onEvent(const sf::Event &event) {
 }
 
 void GameState::update() {
-	m_songTime += GameClock::getTicks() - m_previousFrameTime;
-	m_previousFrameTime = GameClock::getTicks();
-	if ((u32)m_music.getPlayingOffset().asMilliseconds() != m_lastReportedPlayheadPosition) {
-		m_songTime = (m_songTime + m_music.getPlayingOffset().asMilliseconds()) / 2;
-		m_lastReportedPlayheadPosition = m_music.getPlayingOffset().asMilliseconds();
-	}
-
-	m_highway.update(m_songTime);
+	m_songController.update();
+	m_highway.update(m_songController.songTime());
 }
 
 void GameState::draw(RenderTarget &target, RenderStates states) const {

@@ -32,7 +32,7 @@ class Chart {
 	public:
 		Chart(const std::string &path);
 
-		const ChartNote *getNextNote(u64 time);
+		const ChartNote *getNextNote(u64 time) const;
 
 	private:
 		void parse(const std::string &path);

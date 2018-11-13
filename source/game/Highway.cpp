@@ -21,7 +21,7 @@
 #include "Highway.hpp"
 #include "TickUtils.hpp"
 
-Highway::Highway(Chart &chart) : m_chart(chart) {
+Highway::Highway(const Chart &chart) : m_chart(chart) {
 	float backgroundScale = 1.5;
 	m_background1.setScale(backgroundScale, backgroundScale);
 	m_background2.setScale(backgroundScale, backgroundScale);

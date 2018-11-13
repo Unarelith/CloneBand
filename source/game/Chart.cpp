@@ -17,7 +17,7 @@ Chart::Chart(const std::string &path) {
 	parse(path);
 }
 
-const ChartNote *Chart::getNextNote(u64 time) {
+const ChartNote *Chart::getNextNote(u64 time) const {
 	for (auto &it : m_notes)
 		if (time < it.time)
 			return &it;

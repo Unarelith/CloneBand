@@ -24,7 +24,7 @@
 
 class Highway : public IDrawable, public Transformable {
 	public:
-		Highway(Chart &chart);
+		Highway(const Chart &chart);
 
 		void onEvent(const sf::Event &event);
 
@@ -39,7 +39,7 @@ class Highway : public IDrawable, public Transformable {
 
 		void draw(RenderTarget &target, RenderStates states) const override;
 
-		Chart &m_chart;
+		const Chart &m_chart;
 
 		std::deque<Note> m_noteQueue;
 
