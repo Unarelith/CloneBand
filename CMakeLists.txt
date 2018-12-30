@@ -34,15 +34,15 @@ target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 #------------------------------------------------------------------------------
 # Packages
 #------------------------------------------------------------------------------
-# - jsoncpp
+# - gamekit
 #------------------------------------------------------------------------------
-# find_package(JsonCpp REQUIRED)
-# if(NOT JSONCPP_FOUND)
-# 	message(FATAL_ERROR "jsoncpp is needed to build the project. Please install it correctly.")
-# endif()
-#
-# include_directories(${JSONCPP_INCLUDE_DIRS})
-# link_directories(${JSONCPP_LIBRARY_DIRS})
+find_package(GameKit REQUIRED)
+if(NOT GAMEKIT_FOUND)
+	message(FATAL_ERROR "gamekit is needed to build the project. Please install it correctly.")
+endif()
+
+include_directories(${GAMEKIT_INCLUDE_DIRS})
+link_directories(${GAMEKIT_LIBRARY_DIRS})
 
 #------------------------------------------------------------------------------
 # - tinyxml2
@@ -76,7 +76,7 @@ include_directories(${GLM_INCLUDE_DIRS})
 #------------------------------------------------------------------------------
 # - SFML
 #------------------------------------------------------------------------------
-find_package(SFML COMPONENTS audio graphics network system window REQUIRED)
+find_package(SFML COMPONENTS audio REQUIRED)
 if(NOT SFML_FOUND)
 	message(FATAL_ERROR "SFML is needed to build the project. Please install it correctly.")
 endif()
@@ -84,14 +84,39 @@ endif()
 include_directories(${SFML_INCLUDE_DIRS})
 
 #------------------------------------------------------------------------------
+# - SDL2, SDL2_image, SDL2_mixer
+#------------------------------------------------------------------------------
+include(FindPkgConfig)
+
+pkg_search_module(SDL2 REQUIRED sdl2)
+pkg_search_module(SDL2IMAGE REQUIRED SDL2_image)
+pkg_search_module(SDL2MIXER REQUIRED SDL2_mixer)
+
+if(NOT SDL2_FOUND)
+	message(FATAL_ERROR "SDL2 not found!")
+endif(NOT SDL2_FOUND)
+
+if(NOT SDL2IMAGE_FOUND)
+	message(FATAL_ERROR "SDL2_image not found!")
+endif(NOT SDL2IMAGE_FOUND)
+
+if(NOT SDL2MIXER_FOUND)
+	message(FATAL_ERROR "SDL2_mixer not found!")
+endif(NOT SDL2MIXER_FOUND)
+
+include_directories(${SDL2_INCLUDE_DIRS}
+                    ${SDL2IMAGE_INCLUDE_DIRS}
+                    ${SDL2MIXER_INCLUDE_DIRS})
+
+#------------------------------------------------------------------------------
 # Link options
 #------------------------------------------------------------------------------
 target_link_libraries(${CMAKE_PROJECT_NAME}
+                      ${GAMEKIT_LIBRARIES}
                       ${TINYXML2_LIBRARIES}
                       ${OPENGL_LIBRARIES}
                       sfml-audio
-                      sfml-graphics
-                      sfml-network
-                      sfml-system
-                      sfml-window)
+                      ${SDL2_LIBRARIES}
+                      ${SDL2IMAGE_LIBRARIES}
+                      ${SDL2MIXER_LIBRARIES})
 

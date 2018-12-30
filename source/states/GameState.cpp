@@ -14,8 +14,9 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <gk/system/Debug.hpp>
+
 #include "Config.hpp"
-#include "Debug.hpp"
 #include "GameState.hpp"
 
 GameState::GameState() {
@@ -39,7 +40,7 @@ GameState::GameState() {
 	// m_camera.setTargetPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0);
 }
 
-void GameState::onEvent(const sf::Event &event) {
+void GameState::onEvent(const SDL_Event &event) {
 	m_highway.onEvent(event);
 }
 
@@ -48,7 +49,7 @@ void GameState::update() {
 	m_highway.update(m_songController.songTime());
 }
 
-void GameState::draw(RenderTarget &target, RenderStates states) const {
+void GameState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
 	states.projectionMatrix = m_camera.getProjectionMatrix();
 	states.viewMatrix = m_camera.getViewMatrix();
 

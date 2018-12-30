@@ -14,9 +14,9 @@
 #ifndef FRET_HPP_
 #define FRET_HPP_
 
-#include "Sprite.hpp"
+#include <gk/gui/Sprite.hpp>
 
-class Fret : public IDrawable, public Transformable {
+class Fret : public gk::IDrawable, public gk::Transformable {
 	public:
 		Fret(u16 id);
 
@@ -31,14 +31,14 @@ class Fret : public IDrawable, public Transformable {
 		float height() { return m_sprite.frameHeight(); }
 
 	private:
-		void draw(RenderTarget &target, RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
 		u16 m_id;
 
 		bool m_isPressed = false;
 
-		Sprite m_sprite{"texture-frets", 136, 82};
-		Sprite m_flames{"texture-flames", 256, 128};
+		gk::Sprite m_sprite{"texture-frets", 136, 82};
+		gk::Sprite m_flames{"texture-flames", 256, 128};
 };
 
 #endif // FRET_HPP_

@@ -14,7 +14,7 @@
 #ifndef TICKUTILS_HPP_
 #define TICKUTILS_HPP_
 
-#include "IntTypes.hpp"
+#include <gk/core/IntTypes.hpp>
 
 // Utility functions copied from Moonscraper
 namespace TickUtils {

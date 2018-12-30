@@ -14,13 +14,13 @@
 #ifndef CONFIG_HPP_
 #define CONFIG_HPP_
 
-#include "IntTypes.hpp"
+#include <gk/core/IntTypes.hpp>
 
 namespace Config {
 	const u16 screenWidth = 1600;
 	const u16 screenHeight = 900;
 
-	const char * const windowTitle = "CloneBand";
+	const char *const windowTitle = "CloneBand";
 };
 
 #endif // CONFIG_HPP_

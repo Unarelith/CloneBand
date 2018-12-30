@@ -11,20 +11,41 @@
  *
  * =====================================================================================
  */
+#include <gk/resource/ResourceHandler.hpp>
+
 #include "Application.hpp"
 #include "Config.hpp"
-#include "ResourceHandler.hpp"
 #include "TextureLoader.hpp"
 
 #include "GameState.hpp"
 
 void Application::init() {
-	CoreApplication::init();
+	gk::CoreApplication::init();
 
-	createWindow(Config::windowTitle, Config::screenWidth, Config::screenHeight);
+	createWindow(Config::screenWidth, Config::screenHeight, Config::windowTitle);
+
+	initOpenGL();
 
 	m_resourceHandler.loadConfigFile<TextureLoader>("resources/config/textures.xml");
 
-	ApplicationStateStack::getInstance().push<GameState>();
+	m_stateStack.push<GameState>();
+}
+
+void Application::initOpenGL() {
+	glEnable(GL_TEXTURE_2D);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+
+	glClearColor(0, 0, 0, 1.0);
+}
+
+void Application::onEvent(const SDL_Event &event) {
+	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
+		m_window.close();
+	}
 }
 

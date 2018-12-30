@@ -5,6 +5,7 @@ Notes
 • DONE: Add a `noteSpeed` variable in Highway
 • DONE: Remove `Transform`, `Transformable`, `View`, `Camera`, `Billboard`, etc...
    → DONE: Use GLM to replace them
+• TODO: Use `Mix_HookMusic` instead of `sf::Music`
 • TODO: Fix BPM
 • TODO: Add a `StrumBar` class
 • TODO: Add a streak counter

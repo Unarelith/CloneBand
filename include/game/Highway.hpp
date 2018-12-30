@@ -14,46 +14,44 @@
 #ifndef HIGHWAY_HPP_
 #define HIGHWAY_HPP_
 
-#include <deque>
+#include <list>
 
-#include <SFML/Window/Event.hpp>
+#include <gk/core/SDLHeaders.hpp>
+#include <gk/gl/Camera.hpp>
 
-#include "Camera.hpp"
 #include "Note.hpp"
 #include "Fret.hpp"
 
-class Highway : public IDrawable, public Transformable {
+class Highway : public gk::IDrawable, public gk::Transformable {
 	public:
 		Highway(const Chart &chart);
 
-		void onEvent(const sf::Event &event);
+		void onEvent(const SDL_Event &event);
 
 		void update(u32 songTime);
 
 	private:
-		void handleKeyboard(const sf::Event &event);
-		void handleGamepad(const sf::Event &event);
+		void handleKeyboard(const SDL_Event &event);
+		void handleGamepad(const SDL_Event &event);
 
 		void keyPressed(u8 key);
 		void keyReleased(u8 key);
 
-		void draw(RenderTarget &target, RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
 		const Chart &m_chart;
 
-		std::deque<Note> m_noteQueue;
+		std::list<Note> m_noteQueue;
 
 		std::array<Fret, 5> m_frets{0, 1, 2, 3, 4};
 
-		Image m_background1{"texture-highway"};
-		Image m_background2{"texture-highway"};
+		gk::Image m_background1{"texture-highway"};
+		gk::Image m_background2{"texture-highway"};
 		u16 m_backgroundWidth = 0;
 		u16 m_backgroundHeight = 0;
 
-		Image m_sideBars{"texture-side_bars"};
-		Image m_centerLines{"texture-center_lines"};
-
-		bool m_skinEnabled = true;
+		gk::Image m_sideBars{"texture-side_bars"};
+		gk::Image m_centerLines{"texture-center_lines"};
 };
 
 #endif // HIGHWAY_HPP_

@@ -18,7 +18,7 @@
 #include <string>
 #include <vector>
 
-#include "IntTypes.hpp"
+#include <gk/core/IntTypes.hpp>
 
 struct ChartNote;
 

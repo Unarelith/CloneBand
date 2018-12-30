@@ -14,10 +14,11 @@
 #ifndef NOTE_HPP_
 #define NOTE_HPP_
 
-#include "Chart.hpp"
-#include "Sprite.hpp"
+#include <gk/gui/Sprite.hpp>
 
-class Note : public IDrawable, public Transformable {
+#include "Chart.hpp"
+
+class Note : public gk::IDrawable, public gk::Transformable {
 	public:
 		Note(const ChartNote &note);
 
@@ -27,10 +28,10 @@ class Note : public IDrawable, public Transformable {
 		u16 height() { return m_sprite.frameHeight(); }
 
 	private:
-		void draw(RenderTarget &target, RenderStates states) const override;
+		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
-		Sprite m_sprite{"texture-notes", 132, 132};
-		Image m_tail{"texture-tail"};
+		gk::Sprite m_sprite{"texture-notes", 132, 132};
+		gk::Image m_tail{"texture-tail"};
 
 		const ChartNote *m_note;
 };

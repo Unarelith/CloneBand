@@ -13,10 +13,9 @@
  */
 #include <algorithm>
 
-// #include <glm/gtc/matrix_transform.hpp>
+#include <gk/system/Debug.hpp>
+#include <gk/system/GameClock.hpp>
 
-#include "Debug.hpp"
-#include "GameClock.hpp"
 #include "GameSettings.hpp"
 #include "Highway.hpp"
 #include "TickUtils.hpp"
@@ -49,23 +48,23 @@ Highway::Highway(const Chart &chart) : m_chart(chart) {
 	// setRotation(-30.0f, Vector3{1, 0, 0});
 }
 
-void Highway::onEvent(const sf::Event &event) {
+void Highway::onEvent(const SDL_Event &event) {
 	handleKeyboard(event);
 	handleGamepad(event);
 }
 
-void Highway::handleKeyboard(const sf::Event &event) {
-	if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+void Highway::handleKeyboard(const SDL_Event &event) {
+	if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
 		int key = -1;
 
-		if (event.key.code == sf::Keyboard::H) key = 0;
-		if (event.key.code == sf::Keyboard::J) key = 1;
-		if (event.key.code == sf::Keyboard::K) key = 2;
-		if (event.key.code == sf::Keyboard::L) key = 3;
-		if (event.key.code == sf::Keyboard::M) key = 4;
+		if (event.key.keysym.sym == SDLK_h) key = 0;
+		if (event.key.keysym.sym == SDLK_j) key = 1;
+		if (event.key.keysym.sym == SDLK_k) key = 2;
+		if (event.key.keysym.sym == SDLK_l) key = 3;
+		if (event.key.keysym.sym == SDLK_m) key = 4;
 
 		if (key != -1) {
-			if (event.type == sf::Event::KeyPressed) {
+			if (event.type == SDL_KEYDOWN) {
 				m_frets[key].setPressedState(true);
 				keyPressed(key);
 			} else {
@@ -76,20 +75,20 @@ void Highway::handleKeyboard(const sf::Event &event) {
 	}
 }
 
-void Highway::handleGamepad(const sf::Event &event) {
+void Highway::handleGamepad(const SDL_Event &event) {
 	static int key = -1;
 
-	if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+	if (event.type == SDL_JOYBUTTONDOWN || event.type == SDL_JOYBUTTONUP) {
 		key = -1;
 
-		if (event.joystickButton.button == 0) key = 0;
-		if (event.joystickButton.button == 1) key = 1;
-		if (event.joystickButton.button == 3) key = 2;
-		if (event.joystickButton.button == 2) key = 3;
-		if (event.joystickButton.button == 4) key = 4;
+		if (event.jbutton.button == 0) key = 0;
+		if (event.jbutton.button == 1) key = 1;
+		if (event.jbutton.button == 3) key = 2;
+		if (event.jbutton.button == 2) key = 3;
+		if (event.jbutton.button == 4) key = 4;
 
 		if (key != -1) {
-			if (event.type == sf::Event::JoystickButtonPressed) {
+			if (event.type == SDL_JOYBUTTONDOWN) {
 				m_frets[key].setPressedState(true);
 			} else {
 				m_frets[key].setPressedState(false);
@@ -97,7 +96,7 @@ void Highway::handleGamepad(const sf::Event &event) {
 			}
 		}
 	}
-	else if (event.type == sf::Event::JoystickMoved && event.joystickMove.axis == 7 && event.joystickMove.position) {
+	else if (event.type == SDL_JOYAXISMOTION && event.jaxis.axis == 7 && event.jaxis.value) {
 		int i;
 		for (i = 4 ; i >= 0 ; i--) {
 			if (m_frets[i].isPressed()) {
@@ -115,7 +114,7 @@ void Highway::keyPressed(u8 key) {
 	});
 
 	if (it != m_noteQueue.end()) {
-		u64 time = GameClock::getTicks();
+		u64 time = gk::GameClock::getTicks();
 		// DEBUG((int)key, time, it->note().time, it->note().position);
 		if (time < it->note().time + 150
 		 && time > it->note().time - 150) {
@@ -154,7 +153,7 @@ void Highway::update(u32 songTime) {
 	m_background2.setPosition(m_background2.getPosition().x, (int)TickUtils::timeToWorldYPosition(songTime) % m_backgroundHeight - m_backgroundHeight);
 }
 
-void Highway::draw(RenderTarget &target, RenderStates states) const {
+void Highway::draw(gk::RenderTarget &target, gk::RenderStates states) const {
 	states.transform *= getTransform();
 
 	target.draw(m_background1, states);

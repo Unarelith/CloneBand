@@ -14,36 +14,14 @@
 #ifndef COLOR_HPP_
 #define COLOR_HPP_
 
-#include "IntTypes.hpp"
+#include <gk/core/Color.hpp>
 
-class Color {
-	public:
-		Color() = default;
-		Color(u8 _r, u8 _g, u8 _b, u8 _a = 255);
-
-		Color operator-(const Color &color);
-
-		bool operator==(const Color &color) {
-			return r == color.r && g == color.g && b == color.b && a == color.a;
-		}
-
-		bool operator!=(const Color &color) {
-			return !(*this == color);
-		}
-
-		float r = 1.0f;
-		float g = 1.0f;
-		float b = 1.0f;
-		float a = 1.0f;
-
-		static Color Black;
-		static Color White;
-
-		static Color Green;
-		static Color Red;
-		static Color Yellow;
-		static Color Blue;
-		static Color Orange;
+namespace Color {
+	const gk::Color Green{0, 255, 0};
+	const gk::Color Red{232, 8, 24};
+	const gk::Color Yellow{255, 255, 0};
+	const gk::Color Blue{32, 168, 248};
+	const gk::Color Orange{255, 165, 0};
 };
 
 #endif // COLOR_HPP_

@@ -14,13 +14,18 @@
 #ifndef APPLICATION_HPP_
 #define APPLICATION_HPP_
 
-#include "CoreApplication.hpp"
+#include <gk/core/CoreApplication.hpp>
 
-class Application : public CoreApplication {
+class Application : public gk::CoreApplication {
 	public:
-		Application(int argc, char **argv) : CoreApplication(argc, argv) {}
+		Application(int argc, char **argv) : gk::CoreApplication(argc, argv) {}
 
 		void init() override;
+
+	private:
+		void initOpenGL();
+
+		void onEvent(const SDL_Event &event) override;
 };
 
 #endif // APPLICATION_HPP_

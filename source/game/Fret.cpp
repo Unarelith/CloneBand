@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "Color.hpp"
 #include "Fret.hpp"
 
 Fret::Fret(u16 id) {
@@ -19,7 +20,7 @@ Fret::Fret(u16 id) {
 	m_sprite.setPosition(-32, 0);
 	m_sprite.setCurrentFrame(id);
 
-	Color color;
+	gk::Color color;
 	switch (id) {
 		case 0: color = Color::Green;  break;
 		case 1: color = Color::Red;    break;
@@ -30,7 +31,7 @@ Fret::Fret(u16 id) {
 	}
 	m_flames.setColor(color);
 
-	SpriteAnimation anim{20};
+	gk::SpriteAnimation anim{20};
 	anim.setRepeated(false);
 	// for (int i = 2 ; i >= 0 ; --i) anim.addFrame(i);
 	for (int i = 0 ; i < 8 ; ++i) {
@@ -68,7 +69,7 @@ void Fret::setFireState(bool hasFire) {
 	}
 }
 
-void Fret::draw(RenderTarget &target, RenderStates states) const {
+void Fret::draw(gk::RenderTarget &target, gk::RenderStates states) const {
 	states.transform *= getTransform();
 
 	target.draw(m_sprite, states);
