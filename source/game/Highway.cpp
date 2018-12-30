@@ -28,11 +28,8 @@ Highway::Highway(const Chart &chart) : m_chart(chart) {
 	// m_background1.setColor(Color(127, 127, 127));
 	// m_background2.setColor(Color(127, 127, 127));
 
-	m_backgroundWidth = m_background1.width() * m_background1.getScale().x;
-	m_backgroundHeight = m_background1.height() * m_background1.getScale().y;
-
-	m_background1.setPosition(m_frets[0].width() * 5 / 2 - m_backgroundWidth / 2, 0);
-	m_background2.setPosition(m_frets[0].width() * 5 / 2 - m_backgroundWidth / 2, -m_backgroundHeight);
+	m_background1.setPosition(m_frets[0].width() * 5 / 2 - m_background1.width() / 2, 0);
+	m_background2.setPosition(m_frets[0].width() * 5 / 2 - m_background1.width() / 2, -m_background1.height());
 
 	m_sideBars.setScale(0.71, 0.71);
 	m_sideBars.setPosition(m_background1.getPosition().x, 0);
@@ -149,8 +146,8 @@ void Highway::update(u32 songTime) {
 		it.setPosition(it.note().type * m_frets[0].width() + 32, y);
 	}
 
-	m_background1.setPosition(m_background1.getPosition().x, (int)TickUtils::timeToWorldYPosition(songTime) % m_backgroundHeight);
-	m_background2.setPosition(m_background2.getPosition().x, (int)TickUtils::timeToWorldYPosition(songTime) % m_backgroundHeight - m_backgroundHeight);
+	m_background1.setPosition(m_background1.getPosition().x, (int)TickUtils::timeToWorldYPosition(songTime) % m_background1.height());
+	m_background2.setPosition(m_background2.getPosition().x, (int)TickUtils::timeToWorldYPosition(songTime) % m_background1.height() - m_background1.height());
 }
 
 void Highway::draw(gk::RenderTarget &target, gk::RenderStates states) const {

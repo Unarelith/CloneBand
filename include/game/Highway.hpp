@@ -47,8 +47,6 @@ class Highway : public gk::IDrawable, public gk::Transformable {
 
 		gk::Image m_background1{"texture-highway"};
 		gk::Image m_background2{"texture-highway"};
-		u16 m_backgroundWidth = 0;
-		u16 m_backgroundHeight = 0;
 
 		gk::Image m_sideBars{"texture-side_bars"};
 		gk::Image m_centerLines{"texture-center_lines"};
