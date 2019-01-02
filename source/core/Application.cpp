@@ -23,6 +23,7 @@ void Application::init() {
 	gk::CoreApplication::init();
 
 	createWindow(Config::screenWidth, Config::screenHeight, Config::windowTitle);
+	m_window.disableView();
 
 	initOpenGL();
 

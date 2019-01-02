@@ -50,8 +50,8 @@ void GameState::update() {
 }
 
 void GameState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
-	states.projectionMatrix = m_camera.getProjectionMatrix();
-	states.viewMatrix = m_camera.getViewMatrix();
+	states.projectionMatrix = m_camera.getTransform();
+	states.viewMatrix = m_camera.getViewTransform();
 
 	states.shader = &m_shader;
 
