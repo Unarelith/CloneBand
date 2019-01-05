@@ -14,7 +14,7 @@
 #ifndef FRET_HPP_
 #define FRET_HPP_
 
-#include <gk/gui/Sprite.hpp>
+#include <gk/graphics/Sprite.hpp>
 
 class Fret : public gk::IDrawable, public gk::Transformable {
 	public:

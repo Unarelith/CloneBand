@@ -14,7 +14,7 @@
 #ifndef COLOR_HPP_
 #define COLOR_HPP_
 
-#include <gk/core/Color.hpp>
+#include <gk/graphics/Color.hpp>
 
 namespace Color {
 	const gk::Color Green{0, 255, 0};

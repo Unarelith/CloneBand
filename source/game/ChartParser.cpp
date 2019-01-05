@@ -13,7 +13,7 @@
  */
 #include <fstream>
 
-#include <gk/system/Exception.hpp>
+#include <gk/core/Exception.hpp>
 
 #include "Chart.hpp"
 #include "TickUtils.hpp"

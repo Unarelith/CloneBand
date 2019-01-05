@@ -13,8 +13,8 @@
  */
 #include <algorithm>
 
-#include <gk/system/Debug.hpp>
-#include <gk/system/GameClock.hpp>
+#include <gk/core/Debug.hpp>
+#include <gk/core/GameClock.hpp>
 
 #include "GameSettings.hpp"
 #include "Highway.hpp"

@@ -14,7 +14,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <gk/system/Debug.hpp>
+#include <gk/core/Debug.hpp>
 
 #include "Config.hpp"
 #include "GameState.hpp"

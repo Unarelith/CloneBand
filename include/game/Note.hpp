@@ -14,7 +14,7 @@
 #ifndef NOTE_HPP_
 #define NOTE_HPP_
 
-#include <gk/gui/Sprite.hpp>
+#include <gk/graphics/Sprite.hpp>
 
 #include "Chart.hpp"
 
