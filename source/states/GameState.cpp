@@ -50,11 +50,10 @@ void GameState::update() {
 }
 
 void GameState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
-	states.projectionMatrix = m_camera.getTransform();
-	states.viewMatrix = m_camera.getViewTransform();
-
 	states.shader = &m_shader;
 
+	target.setView(m_camera);
 	target.draw(m_highway, states);
+	target.disableView();
 }
 
