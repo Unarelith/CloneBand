@@ -121,6 +121,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
                       ${GAMEKIT_LIBRARIES}
                       ${TINYXML2_LIBRARIES}
                       ${OPENGL_LIBRARIES}
+                      sfml-system
                       sfml-audio
                       ${SDL2_LIBRARIES}
                       ${SDL2IMAGE_LIBRARIES}
