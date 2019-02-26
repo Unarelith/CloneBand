@@ -40,7 +40,8 @@ bool ChartParser::parseSection(std::ifstream &chart, std::vector<ChartNote> &not
 	skipWhitespaces(chart);
 
 	if (sectionName == "Song") {
-		if (char c = chart.get() ; c != '{')
+		char c = chart.get();
+		if (c != '{')
 			throw EXCEPTION("Syntax error at char '", (int)c, "'", chart.tellg());
 
 		skipWhitespaces(chart);
@@ -54,7 +55,8 @@ bool ChartParser::parseSection(std::ifstream &chart, std::vector<ChartNote> &not
 		}
 	}
 	else if (sectionName == "SyncTrack") {
-		if (char c = chart.get() ; c != '{')
+		char c = chart.get();
+		if (c != '{')
 			throw EXCEPTION("Syntax error at char '", (int)c, "'", chart.tellg());
 
 		skipWhitespaces(chart);
@@ -68,7 +70,8 @@ bool ChartParser::parseSection(std::ifstream &chart, std::vector<ChartNote> &not
 		}
 	}
 	else if (sectionName == "MediumSingle") {
-		if (char c = chart.get() ; c != '{')
+		char c = chart.get();
+		if (c != '{')
 			throw EXCEPTION("Syntax error at char '", (int)c, "'", chart.tellg());
 
 		skipWhitespaces(chart);
