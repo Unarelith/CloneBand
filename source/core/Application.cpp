@@ -12,10 +12,10 @@
  * =====================================================================================
  */
 #include <gk/resource/ResourceHandler.hpp>
+#include <gk/resource/TextureLoader.hpp>
 
 #include "Application.hpp"
 #include "Config.hpp"
-#include "TextureLoader.hpp"
 
 #include "GameState.hpp"
 
@@ -27,7 +27,7 @@ void Application::init() {
 
 	initOpenGL();
 
-	m_resourceHandler.loadConfigFile<TextureLoader>("resources/config/textures.xml");
+	m_resourceHandler.loadConfigFile<gk::TextureLoader>("resources/config/textures.xml");
 
 	m_stateStack.push<GameState>();
 }
