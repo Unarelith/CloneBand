@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include "Color.hpp"
 #include "Fret.hpp"
 
@@ -20,7 +22,7 @@ Fret::Fret(u16 id) {
 	m_sprite.setPosition(-32, 0);
 	m_sprite.setCurrentFrame(id);
 
-	gk::Color color;
+	sf::Color color;
 	switch (id) {
 		case 0: color = Color::Green;  break;
 		case 1: color = Color::Red;    break;
@@ -69,7 +71,7 @@ void Fret::setFireState(bool hasFire) {
 	}
 }
 
-void Fret::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void Fret::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
 	target.draw(m_sprite, states);

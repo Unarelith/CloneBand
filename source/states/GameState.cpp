@@ -22,25 +22,25 @@
 GameState::GameState() {
 	m_highway.setPosition(Config::screenWidth / 2 - 5 * 136 / 2, 0);
 
-	m_shader.createProgram();
-	m_shader.addShader(GL_VERTEX_SHADER, "resources/shaders/basic.v.glsl");
-	m_shader.addShader(GL_FRAGMENT_SHADER, "resources/shaders/basic.f.glsl");
-	m_shader.linkProgram();
+	// m_shader.createProgram();
+	// m_shader.addShader(GL_VERTEX_SHADER, "resources/shaders/basic.v.glsl");
+	// m_shader.addShader(GL_FRAGMENT_SHADER, "resources/shaders/basic.f.glsl");
+	// m_shader.linkProgram();
 
-	// m_projectionMatrix2d = glm::ortho(0.0f, (float)Config::screenWidth, (float)Config::screenHeight, 0.0f);
+	//  m_projectionMatrix2d = glm::ortho(0.0f, (float)Config::screenWidth, (float)Config::screenHeight, 0.0f);
 
-	m_camera.setAspectRatio((float)Config::screenWidth / Config::screenHeight);
-	m_camera.setUpVector(0, -1, 0);
+	// m_camera.setAspectRatio((float)Config::screenWidth / Config::screenHeight);
+	// m_camera.setUpVector(0, -1, 0);
 
-	// m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight + 400, -100);
-	m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight + 300, -600);
-	m_camera.setTargetPosition(Config::screenWidth / 2.0f, 0, 0);
+	//  m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight + 400, -100);
+	// m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight + 300, -600);
+	// m_camera.setTargetPosition(Config::screenWidth / 2.0f, 0, 0);
 
-	// m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, -1000);
-	// m_camera.setTargetPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0);
+	//  m_camera.setPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, -1000);
+	//  m_camera.setTargetPosition(Config::screenWidth / 2.0f, Config::screenHeight / 2.0f, 0);
 }
 
-void GameState::onEvent(const SDL_Event &event) {
+void GameState::onEvent(const sf::Event &event) {
 	m_highway.onEvent(event);
 }
 
@@ -49,11 +49,11 @@ void GameState::update() {
 	m_highway.update(m_songController.songTime());
 }
 
-void GameState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
-	states.shader = &m_shader;
+void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+	// states.shader = &m_shader;
 
-	target.setView(m_camera);
+	// target.setView(m_camera);
 	target.draw(m_highway, states);
-	target.disableView();
+	// target.disableView();
 }
 

@@ -11,20 +11,22 @@
  *
  * =====================================================================================
  */
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include "Color.hpp"
 #include "Note.hpp"
 
 Note::Note(const ChartNote &note) : m_note(&note) {
 	m_sprite.setPosition(-34, 80);
 	m_sprite.setOrigin(0, 80);
-	m_sprite.setRotation(50.0f, gk::Vector3f{1, 0, 0});
+	// m_sprite.setRotation(50.0f, gk::Vector2f{1, 0, 0}); // FIXME
 
 	if (!note.isHopo)
 		m_sprite.setCurrentFrame(note.type);
 	else
 		m_sprite.setCurrentFrame(note.type + 5);
 
-	gk::Color color;
+	sf::Color color;
 	switch (note.type) {
 		case 0: color = Color::Green;   break;
 		case 1: color = Color::Red;     break;
@@ -39,7 +41,7 @@ Note::Note(const ChartNote &note) : m_note(&note) {
 	m_tail.setColor(color);
 }
 
-void Note::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void Note::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
 	if (m_note->length)

@@ -25,7 +25,7 @@ class Application : public gk::CoreApplication {
 	private:
 		void initOpenGL();
 
-		void onEvent(const SDL_Event &event) override;
+		void onEvent(const sf::Event &event) override;
 };
 
 #endif // APPLICATION_HPP_

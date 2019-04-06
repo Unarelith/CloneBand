@@ -15,8 +15,6 @@
 #define GAMESTATE_HPP_
 
 #include <gk/core/ApplicationState.hpp>
-#include <gk/gl/Camera.hpp>
-#include <gk/gl/Shader.hpp>
 
 #include "Highway.hpp"
 #include "SongController.hpp"
@@ -25,18 +23,18 @@ class GameState : public gk::ApplicationState {
 	public:
 		GameState();
 
-		void onEvent(const SDL_Event &event) override;
+		void onEvent(const sf::Event &event) override;
 
 		void update() override;
 
 	private:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		SongController m_songController;
 		Highway m_highway{m_songController.chart()};
 
-		gk::Camera m_camera{90.0f, 0.1f, 1000.0f};
-		gk::Shader m_shader;
+		// gk::Camera m_camera{90.0f, 0.1f, 1000.0f};
+		// gk::Shader m_shader;
 };
 
 #endif // GAMESTATE_HPP_

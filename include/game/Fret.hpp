@@ -16,7 +16,7 @@
 
 #include <gk/graphics/Sprite.hpp>
 
-class Fret : public gk::IDrawable, public gk::Transformable {
+class Fret : public sf::Drawable, public sf::Transformable {
 	public:
 		Fret(u16 id);
 
@@ -31,7 +31,7 @@ class Fret : public gk::IDrawable, public gk::Transformable {
 		float height() { return m_sprite.frameHeight(); }
 
 	private:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		u16 m_id;
 

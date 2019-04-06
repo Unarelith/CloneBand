@@ -18,7 +18,7 @@
 
 #include "Chart.hpp"
 
-class Note : public gk::IDrawable, public gk::Transformable {
+class Note : public sf::Drawable, public sf::Transformable {
 	public:
 		Note(const ChartNote &note);
 
@@ -28,7 +28,7 @@ class Note : public gk::IDrawable, public gk::Transformable {
 		u16 height() { return m_sprite.frameHeight(); }
 
 	private:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		gk::Sprite m_sprite{"texture-notes", 132, 132};
 		gk::Image m_tail{"texture-tail"};

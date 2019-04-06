@@ -22,8 +22,8 @@
 void Application::init() {
 	gk::CoreApplication::init();
 
-	createWindow(Config::screenWidth, Config::screenHeight, Config::windowTitle);
-	m_window.disableView();
+	createWindow(sf::VideoMode(Config::screenWidth, Config::screenHeight), Config::windowTitle, sf::Style::Close);
+	// m_window.disableView();
 
 	initOpenGL();
 
@@ -33,20 +33,20 @@ void Application::init() {
 }
 
 void Application::initOpenGL() {
-	glEnable(GL_TEXTURE_2D);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-
-	glClearColor(0, 0, 0, 1.0);
+	// glEnable(GL_TEXTURE_2D);
+    //
+	// glEnable(GL_BLEND);
+	// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //
+	// glEnable(GL_DEPTH_TEST);
+	// glEnable(GL_CULL_FACE);
+    //
+	// glClearColor(0, 0, 0, 1.0);
 }
 
-void Application::onEvent(const SDL_Event &event) {
-	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
-		m_window.close();
+void Application::onEvent(const sf::Event &event) {
+	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+		m_isRunning = false;
 	}
 }
 

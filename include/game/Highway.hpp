@@ -16,28 +16,29 @@
 
 #include <list>
 
-#include <gk/core/SDLHeaders.hpp>
-#include <gk/gl/Camera.hpp>
+// #include <gk/gl/Camera.hpp>
+
+#include <SFML/Window/Event.hpp>
 
 #include "Note.hpp"
 #include "Fret.hpp"
 
-class Highway : public gk::IDrawable, public gk::Transformable {
+class Highway : public sf::Drawable, public sf::Transformable {
 	public:
 		Highway(const Chart &chart);
 
-		void onEvent(const SDL_Event &event);
+		void onEvent(const sf::Event &event);
 
 		void update(u32 songTime);
 
 	private:
-		void handleKeyboard(const SDL_Event &event);
-		void handleGamepad(const SDL_Event &event);
+		void handleKeyboard(const sf::Event &event);
+		void handleGamepad(const sf::Event &event);
 
 		void keyPressed(u8 key);
 		void keyReleased(u8 key);
 
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		const Chart &m_chart;
 
