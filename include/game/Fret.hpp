@@ -16,7 +16,7 @@
 
 #include <gk/graphics/Sprite.hpp>
 
-class Fret : public gk::IDrawable, public gk::Transformable {
+class Fret : public gk::Drawable, public gk::Transformable {
 	public:
 		Fret(u16 id);
 

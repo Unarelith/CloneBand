@@ -22,7 +22,7 @@
 #include "Note.hpp"
 #include "Fret.hpp"
 
-class Highway : public gk::IDrawable, public gk::Transformable {
+class Highway : public gk::Drawable, public gk::Transformable {
 	public:
 		Highway(const Chart &chart);
 

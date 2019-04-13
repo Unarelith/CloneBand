@@ -18,7 +18,7 @@
 
 #include "Chart.hpp"
 
-class Note : public gk::IDrawable, public gk::Transformable {
+class Note : public gk::Drawable, public gk::Transformable {
 	public:
 		Note(const ChartNote &note);
 
