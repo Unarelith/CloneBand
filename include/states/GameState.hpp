@@ -35,7 +35,7 @@ class GameState : public gk::ApplicationState {
 		SongController m_songController;
 		Highway m_highway{m_songController.chart()};
 
-		gk::Camera m_camera{90.0f, 0.1f, 1000.0f};
+		gk::Camera m_camera{90.0f / M_PI * 180.0f, 0.1f, 1000.0f};
 		gk::Shader m_shader;
 };
 
